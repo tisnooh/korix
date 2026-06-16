@@ -2,9 +2,9 @@ import { Reveal, Overline } from "./Primitives";
 
 const STEPS = [
   { num: "01", title: "Découverte", text: "On échange sur votre projet et vos objectifs." },
-  { num: "02", title: "Conception", text: "Je conçois une maquette adaptée à vos besoins." },
-  { num: "03", title: "Développement", text: "Je développe un site rapide, sécurisé et optimisé." },
-  { num: "04", title: "Mise en ligne", text: "Votre site est en ligne, prêt à performer." },
+  { num: "02", title: "Conception", text: "Nous créons une maquette sur mesure pour vous." },
+  { num: "03", title: "Développement", text: "Votre site prend vie, rapide et optimisé." },
+  { num: "04", title: "Lancement", text: "Mise en ligne et suivi pour vos résultats." },
 ];
 
 export const Process = () => {
@@ -12,10 +12,10 @@ export const Process = () => {
     <section id="processus" className="relative py-28 md:py-36">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <div className="max-w-2xl">
-          <Reveal><Overline>Processus</Overline></Reveal>
+          <Reveal><Overline>Notre processus</Overline></Reveal>
           <Reveal delay={0.05}>
             <h2 className="font-display mt-5 text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
-              Une méthode simple, des résultats concrets.
+              Une méthode claire en 4 étapes.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>

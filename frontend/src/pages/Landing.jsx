@@ -1,6 +1,7 @@
 import { Header } from "../components/landing/Header";
 import { Hero } from "../components/landing/Hero";
 import { TrustBar } from "../components/landing/TrustBar";
+import { Mission } from "../components/landing/Mission";
 import { Services } from "../components/landing/Services";
 import { Portfolio } from "../components/landing/Portfolio";
 import { Process } from "../components/landing/Process";
@@ -14,6 +15,7 @@ export default function Landing() {
       <main>
         <Hero />
         <TrustBar />
+        <Mission />
         <Services />
         <Portfolio />
         <Process />
