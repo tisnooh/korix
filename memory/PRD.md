@@ -36,6 +36,14 @@ KORIX builds premium websites that help businesses look professional and attract
 - Footer: 4 columns + social icons
 - Fully responsive; verified by testing agent at 100% (frontend), no console errors
 
+## Upgrade — Cinematic layered direction (2026-06-16)
+- Hero rebuilt in animated LAYERS from uploaded separated assets: galaxy starfield (CSS, drift+twinkle) + glowing planet horizon (`planet-arc.png`, mix-blend-screen, parallax, halo pulse) + floating laptop-on-rock foreground (`laptop-rock.png`). framer-motion useScroll parallax on stars/planet/laptop/text. Inline stats (+50 / 98% / 2,5M€).
+- Added Mission section (3 cards: Attirer / Convaincre / Développer).
+- Portfolio converted to premium embla carousel (prev/next + dots, peeking slides): Résidences Horizon, Le Goût Authentique, Clinique Dentaire Lumière, Maison Éclat.
+- Process copy updated (Découverte/Conception/Développement/Lancement).
+- Final CTA now uses large planet horizon (`planet-wide.png`, mix-blend-screen) as cinematic background.
+- TrustBar simplified to client-sectors strip. Verified 100% (testing agent iteration_2).
+
 ## Backlog / Next Action Items
 - P1: Functional contact form (backend + email) when KORIX wants lead capture
 - P2: "Tarifs" and "À propos" dedicated content/sections (currently anchors)
