@@ -1,0 +1,37 @@
+{
+  "summary": "Frontend-only testing for KORIX static French landing page. All required data-testids, sections, images, navigation, and responsive behavior verified. Found and fixed 2 minor data-testid mismatches caused by incorrect accent/character normalization in Header.jsx and Hero.jsx.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [
+    "No action required from main agent. Two minor data-testid normalization issues were fixed in /app/frontend/src/components/landing/Header.jsx and /app/frontend/src/components/landing/Hero.jsx (NFD normalize + strip diacritics so 'À propos' -> nav-apropos, 'Sécurisés' -> value-securises, 'Optimisés' -> value-optimises)."
+  ],
+  "critical_code_review_comments": [
+    "Header.jsx originally generated nav data-testids via `label.toLowerCase().replace(/[^a-z]/g, '')` which silently dropped accented characters (e.g. 'À propos' became 'propos'). Fixed using NFD + diacritic strip. Use the same pattern wherever testids are derived from user-facing labels.",
+    "Hero.jsx had the same issue for value-* testids ('Sécurisés' rendered as value-sécurisés). Fixed.",
+    "Footer uses id='apropos' on the footer element. Clicking nav-apropos scrolls toward the footer but the page cannot scroll further than its bottom, so the section may not reach the very top of the viewport (expected behavior for last section).",
+    "All multiple `<a href='#contact'>` links across Footer socials, Portfolio project-link-*, FinalCTA button (mailto) - intended static behavior; OK for MVP.",
+    "Footer copyright shows '© 2024' — minor: project context is 2026, consider dynamic year."
+  ],
+  "updated_files": [
+    "/app/frontend/src/components/landing/Header.jsx",
+    "/app/frontend/src/components/landing/Hero.jsx"
+  ],
+  "success_rate": {
+    "backend": "N/A (no backend testing requested)",
+    "frontend": "100%"
+  },
+  "test_credentials": "N/A - static page, no auth",
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Verified: site-header, brand-logo, hero-cta-primary/secondary, hero-mockup loaded (naturalWidth=1376), all 3 value points, all nav links with correct hrefs (#projets/#services/#processus/#apropos), header-cta (#contact), trust-bar with stat-120+/stat-98%/stat-2,5M€, 4 service cards with correct names, 4 portfolio projects with images loading (naturalWidth=1408 each) and project-link-* anchors, 4 process steps with French titles, final-cta with mailto button, 3 social icons. Mobile (390px) has no horizontal overflow. No console errors or page errors. Nav click smooth-scroll confirmed working (nav-services scrolls to top=0).",
+  "rca_of_the_issue": "Original data-testid generation regex `replace(/[^a-z]/g, '')` only kept ASCII a-z, so accented chars and the leading 'À' were dropped/discarded leading to mismatched testids. Fix: normalize via String.prototype.normalize('NFD') and strip combining diacritical marks (U+0300-U+036F) before lowercasing and stripping non-alphanumeric chars."
+}
