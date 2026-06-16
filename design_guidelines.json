@@ -1,0 +1,94 @@
+{
+  "theme": "dark",
+  "archetype": "5 - Luxury (Cinematic & Moody Dark) with Archetype 7 Electric Blue Accents",
+  "design_philosophy": "Ultra-premium, cinematic, high-contrast dark mode. Eliminate all generic 'agency template' layouts. Use aggressive negative space (30% less text, 2x more padding). The interface must feel expensive, immersive, and highly authoritative.",
+  "language": "fr",
+  "colors": {
+    "background_base": "#030303",
+    "background_surface": "#08080A",
+    "primary_electric": "#0057FF",
+    "primary_glow": "rgba(0, 87, 255, 0.4)",
+    "accent_cyan": "#00E5FF",
+    "text_primary": "#FFFFFF",
+    "text_secondary": "#A1A1AA",
+    "text_muted": "#52525B",
+    "border_subtle": "#1A1A24",
+    "glass_bg": "rgba(10, 10, 15, 0.6)"
+  },
+  "typography": {
+    "heading_font": "Cabinet Grotesk",
+    "body_font": "Outfit",
+    "rules": {
+      "h1": "text-5xl sm:text-6xl lg:text-7xl tracking-tighter font-black text-white",
+      "h2": "text-4xl sm:text-5xl tracking-tight font-bold text-white",
+      "h3": "text-2xl sm:text-3xl tracking-tight font-semibold text-white",
+      "body": "text-base sm:text-lg leading-relaxed font-light text-zinc-400",
+      "overline": "text-xs tracking-[0.2em] uppercase font-bold text-[#0057FF]",
+      "highlight": "bg-clip-text text-transparent bg-gradient-to-r from-[#0057FF] to-[#00E5FF]"
+    }
+  },
+  "spacing_and_layout": {
+    "section_padding": "py-24 md:py-32 lg:py-40",
+    "container_max_width": "max-w-7xl mx-auto px-6 md:px-12",
+    "gap_large": "gap-12 md:gap-24",
+    "negative_space_rule": "Enforce maximum breathing room. Elements should not be cramped. Containers must have p-8 or p-12 minimum."
+  },
+  "effects": {
+    "glassmorphism": "backdrop-blur-2xl bg-black/40 border border-white/5",
+    "cinematic_glow": "shadow-[0_0_50px_-12px_rgba(0,87,255,0.5)]",
+    "planet_glow_bg": "bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-[#0033A0]/30 via-[#030303] to-[#030303]",
+    "card_hover_effect": "hover:border-[#0057FF]/50 hover:shadow-[0_0_30px_-5px_rgba(0,87,255,0.3)] transition-all duration-500 ease-out translate-y-[-4px]",
+    "button_primary": "bg-[#0057FF] text-white rounded-full px-8 py-4 font-semibold hover:bg-[#004ACC] hover:shadow-[0_0_20px_rgba(0,87,255,0.5)] transition-all duration-300"
+  },
+  "components": {
+    "header": {
+      "style": "fixed top-0 w-full z-50 backdrop-blur-xl bg-[#030303]/70 border-b border-white/5 transition-all",
+      "brand": "KORIX (text-2xl font-black tracking-tighter)",
+      "navigation": ["Projets", "Services", "Processus", "À propos"],
+      "cta": "Démarrer un projet"
+    },
+    "hero": {
+      "composition": "Central text block dominating the screen. Headline: 'L\\'art de l\\'excellence digitale.' with 'excellence' in electric blue gradient. Below the text: A massive floating laptop mockup overlapping a mobile mockup. The bottom edge of the viewport emits a cinematic blue planet-glow.",
+      "animations": "Subtle, continuous levitation (Y-axis translation) of the device mockups. Headline fades and slides up on load."
+    },
+    "trust_bar": {
+      "layout": "Horizontal scrolling marquee or evenly spaced flex grid depending on screen size. High contrast, muted text.",
+      "content": "Sectors: Cabinet Dentaire • Restauration • Institut de Beauté • Immobilier. Stats: +400% de conversion moyenne • Design sur-mesure • Performances extrêmes"
+    },
+    "services": {
+      "layout": "Grid of 4 dark cards (grid-cols-1 md:grid-cols-2).",
+      "card_design": "Dark surface (#08080A), subtle 1px border (#1A1A24). Large padding (p-10). Lucide line icons in electric blue. On hover, the border lights up and casts a subtle blue inner glow.",
+      "items": ["Site vitrine", "Site e-commerce", "Landing page", "Refonte de site"]
+    },
+    "portfolio": {
+      "layout": "Editorial Asymmetry. NOT a standard grid. Use a vertical scrolling stack where each project card alternates left/right alignment. The mockup takes 60% of the width, the typography takes 40%. Huge sector numbers (e.g., '01').",
+      "sectors": ["Cabinet Dentaire", "Restaurant", "Institut de Beauté", "Immobilier"],
+      "card_style": "No visible container background for the wrapper. The mockups themselves should be highly polished and drop a massive shadow on the black background."
+    },
+    "process_timeline": {
+      "layout": "Horizontal timeline (flex-col on mobile, flex-row on desktop) with 4 glowing nodes.",
+      "style": "A subtle horizontal line (white/10) connects the nodes. Each node is a circle with a glowing blue border. Text content sits below each node. Add scroll-reveal animations to light up the nodes sequentially."
+    },
+    "cta_final": {
+      "style": "Massive py-32 section. Luminous blue atmospheric background (radial gradient center).",
+      "content": "Headline: 'Prêt à dominer votre marché ?'. Subtitle: 'Rejoignez l\\'élite avec un site web ultra-premium.'. Button: 'Démarrer votre projet'"
+    },
+    "footer": {
+      "layout": "4 columns. Minimalist, premium.",
+      "columns": ["Brand (KORIX) + Tagline", "Navigation", "Services", "Contact"],
+      "bottom_bar": "border-t border-white/5 pt-8 text-sm text-zinc-500 text-center"
+    }
+  },
+  "imagery_prompts": {
+    "instructions": "Use these prompts with an AI image generator to create the required assets for the interface mockups. Do NOT use generic placeholder images.",
+    "hero_mockups": "High-end 3D render of a sleek metallic laptop and smartphone floating in a dark void. Cinematic studio lighting, reflections on the dark screen, electric blue ambient rim lighting from below. Ultra-realistic, 8k, architectural visualization style.",
+    "portfolio_dentaire": "Ultra-premium website interface for a luxury dental clinic displayed on a 3D dark laptop monitor. The website design shows modern clean architectural lines, dark mode UI, elegant typography. Cinematic lighting.",
+    "portfolio_restaurant": "Michelin-star fine dining website mockup on a sleek dark tablet screen. Moody lighting, high-contrast dark UI, electric blue accent buttons, showing a beautifully plated dish. Luxury digital design.",
+    "portfolio_beaute": "High-end luxury beauty salon website design presented on a floating dark smartphone. Minimalist dark UI interface, elegant serif fonts, showing a sophisticated interior or premium skincare product.",
+    "portfolio_immobilier": "Exclusive luxury real estate website interface mockup on a sleek desktop monitor in a dark studio. The screen displays a modern black architectural villa at night with cinematic lighting. Premium dark UI."
+  },
+  "interactive_and_testing_rules": {
+    "interactions": "All hover states must be distinct. Avoid instantaneous changes; use transition-all duration-300 or 500.",
+    "testing": "All interactive elements, buttons, links, and forms MUST include 'data-testid' attributes (e.g., data-testid='nav-services-link', data-testid='hero-cta-button')."
+  }
+}
