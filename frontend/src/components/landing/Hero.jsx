@@ -14,10 +14,6 @@ const STATS = [
 export const Hero = () => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const planetY = useTransform(scrollYProgress, [0, 1], [0, 140]);
-  const planetScale = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
-  const laptopY = useTransform(scrollYProgress, [0, 1], [0, -60]);
-  const starsY = useTransform(scrollYProgress, [0, 1], [0, 60]);
   const textY = useTransform(scrollYProgress, [0, 1], [0, 80]);
 
   return (
@@ -29,25 +25,8 @@ export const Hero = () => {
     >
       {/* deep space backdrop */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_60%_8%,rgba(0,72,220,0.22),transparent_60%)]" />
-      <motion.div style={{ y: starsY }} className="absolute inset-0 starfield animate-drift opacity-70" />
-      <motion.div style={{ y: starsY }} className="absolute inset-0 starfield animate-twinkle opacity-40" />
-
-      {/* planet horizon — lower background layer */}
-      <motion.div
-        style={{ y: planetY, scale: planetScale }}
-        className="absolute -bottom-[42%] left-1/2 -translate-x-1/2 w-[140%] md:w-[120%] lg:w-[95%] pointer-events-none"
-      >
-        <div className="relative animate-halo">
-          <img
-            src="/assets/planet-arc.png"
-            alt=""
-            aria-hidden="true"
-            className="w-full blend-screen select-none"
-          />
-        </div>
-      </motion.div>
-      {/* horizon glow line */}
-      <div className="absolute bottom-[8%] left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#2f7bff]/70 to-transparent blur-[1px] animate-pulse-glow" />
+      <div className="absolute inset-0 starfield opacity-70" />
+      <div className="absolute inset-0 starfield opacity-40" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 grid lg:grid-cols-[1fr_1.05fr] gap-12 lg:gap-8 items-center">
         {/* Left — copy */}
@@ -120,16 +99,15 @@ export const Hero = () => {
           </motion.div>
         </motion.div>
 
-        {/* Right — layered device scene */}
+        {/* Right — device scene (image statique) */}
         <motion.div
-          style={{ y: laptopY }}
           initial={{ opacity: 0, scale: 0.94, y: 30 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 1.1, delay: 0.25, ease }}
           className="relative"
         >
           <div className="absolute inset-0 -z-0 bg-[radial-gradient(ellipse_at_center,rgba(0,87,255,0.28),transparent_65%)] blur-2xl scale-110" />
-          <div className="relative animate-float">
+          <div className="relative">
             <img
               src="/assets/laptop-rock.png"
               alt="Maquette de site web premium créée par KORIX"
