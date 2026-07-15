@@ -1,0 +1,197 @@
+"use client";
+
+import { FormEvent, useRef, useState } from "react";
+import Link from "next/link";
+import { ArrowRight, CheckCircle2, LoaderCircle } from "lucide-react";
+import {
+  budgetRanges,
+  desiredTimelines,
+  projectTypes,
+  type ContactErrors,
+  type ContactPayload,
+  validateContactPayload,
+} from "@/lib/contact";
+
+type Status = "idle" | "sending" | "success" | "error";
+
+export function ContactForm() {
+  const formRef = useRef<HTMLFormElement>(null);
+  const [startedAt, setStartedAt] = useState(() => Date.now());
+  const [status, setStatus] = useState<Status>("idle");
+  const [errors, setErrors] = useState<ContactErrors>({});
+  const [message, setMessage] = useState("");
+
+  const focusFirstError = (fieldErrors: ContactErrors) => {
+    const first = Object.keys(fieldErrors)[0];
+    requestAnimationFrame(() => {
+      formRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
+    });
+  };
+
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formElement = event.currentTarget;
+    setMessage("");
+    const form = new FormData(formElement);
+    const payload: ContactPayload = {
+      name: String(form.get("name") || ""),
+      company: String(form.get("company") || ""),
+      email: String(form.get("email") || ""),
+      phone: String(form.get("phone") || ""),
+      projectType: String(form.get("projectType") || ""),
+      budget: String(form.get("budget") || ""),
+      timeline: String(form.get("timeline") || ""),
+      description: String(form.get("description") || ""),
+      consent: form.get("consent") === "on",
+      website: String(form.get("website") || ""),
+      startedAt,
+    };
+
+    const validation = validateContactPayload(payload);
+    if (!validation.valid) {
+      setErrors(validation.errors);
+      setStatus("error");
+      setMessage("Vérifiez les champs signalés avant l’envoi.");
+      focusFirstError(validation.errors);
+      return;
+    }
+
+    setErrors({});
+    setStatus("sending");
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(validation.data),
+      });
+      const result = (await response.json()) as { message?: string; errors?: ContactErrors };
+
+      if (!response.ok) {
+        if (result.errors) {
+          setErrors(result.errors);
+          focusFirstError(result.errors);
+        }
+        throw new Error(result.message || "L’envoi n’a pas abouti.");
+      }
+
+      formElement.reset();
+      setStatus("success");
+      setMessage("Votre demande est arrivée chez KORIX. Nous reviendrons vers vous avec une réponse personnalisée.");
+      window.dispatchEvent(new CustomEvent("korix:conversion", { detail: { event: "contact_form_sent" } }));
+    } catch (error) {
+      setStatus("error");
+      setMessage(error instanceof Error ? error.message : "Une erreur empêche momentanément l’envoi.");
+    }
+  }
+
+  if (status === "success") {
+    return (
+      <div className="form-success" role="status" data-testid="contact-success">
+        <CheckCircle2 aria-hidden="true" />
+        <p className="eyebrow"><span /> Demande envoyée</p>
+        <h3>Merci pour votre confiance.</h3>
+        <p>{message}</p>
+        <button
+          className="button button--ghost"
+          type="button"
+          onClick={() => {
+            setStatus("idle");
+            setStartedAt(Date.now());
+            setMessage("");
+          }}
+        >
+          Envoyer une autre demande
+        </button>
+      </div>
+    );
+  }
+
+  const errorFor = (field: keyof ContactErrors) =>
+    errors[field] ? <span className="field-error" id={`${field}-error`}>{errors[field]}</span> : null;
+
+  return (
+    <form ref={formRef} className="contact-form" onSubmit={onSubmit} noValidate data-testid="contact-form">
+      <div className="form-grid">
+        <label>
+          <span>Nom</span>
+          <input name="name" autoComplete="name" minLength={2} required aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? "name-error" : undefined} />
+          {errorFor("name")}
+        </label>
+        <label>
+          <span>Entreprise</span>
+          <input name="company" autoComplete="organization" minLength={2} required aria-invalid={Boolean(errors.company)} aria-describedby={errors.company ? "company-error" : undefined} />
+          {errorFor("company")}
+        </label>
+        <label>
+          <span>E-mail</span>
+          <input name="email" type="email" inputMode="email" autoComplete="email" required aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "email-error" : undefined} />
+          {errorFor("email")}
+        </label>
+        <label>
+          <span>Téléphone <small>(facultatif)</small></span>
+          <input name="phone" type="tel" inputMode="tel" autoComplete="tel" aria-invalid={Boolean(errors.phone)} aria-describedby={errors.phone ? "phone-error" : undefined} />
+          {errorFor("phone")}
+        </label>
+        <label>
+          <span>Type de projet</span>
+          <select name="projectType" defaultValue="" required aria-invalid={Boolean(errors.projectType)} aria-describedby={errors.projectType ? "projectType-error" : undefined}>
+            <option value="" disabled>Choisir un projet</option>
+            {projectTypes.map((option) => <option key={option}>{option}</option>)}
+          </select>
+          {errorFor("projectType")}
+        </label>
+        <label>
+          <span>Budget envisagé</span>
+          <select name="budget" defaultValue="" required aria-invalid={Boolean(errors.budget)} aria-describedby={errors.budget ? "budget-error" : undefined}>
+            <option value="" disabled>Choisir une fourchette</option>
+            {budgetRanges.map((option) => <option key={option}>{option}</option>)}
+          </select>
+          {errorFor("budget")}
+        </label>
+        <label className="form-field-wide">
+          <span>Délai souhaité</span>
+          <select name="timeline" defaultValue="" required aria-invalid={Boolean(errors.timeline)} aria-describedby={errors.timeline ? "timeline-error" : undefined}>
+            <option value="" disabled>Choisir un délai</option>
+            {desiredTimelines.map((option) => <option key={option}>{option}</option>)}
+          </select>
+          {errorFor("timeline")}
+        </label>
+        <label className="form-field-wide">
+          <span>Votre projet</span>
+          <textarea
+            name="description"
+            rows={5}
+            minLength={30}
+            maxLength={2000}
+            placeholder="Votre activité, vos objectifs et les principaux besoins du futur site…"
+            required
+            aria-invalid={Boolean(errors.description)}
+            aria-describedby={errors.description ? "description-error" : "description-help"}
+          />
+          <small className="field-help" id="description-help">30 caractères minimum.</small>
+          {errorFor("description")}
+        </label>
+      </div>
+
+      <label className="honeypot" aria-hidden="true">
+        Ne pas remplir ce champ
+        <input name="website" tabIndex={-1} autoComplete="off" />
+      </label>
+
+      <label className="consent-field">
+        <input name="consent" type="checkbox" required aria-invalid={Boolean(errors.consent)} aria-describedby={errors.consent ? "consent-error" : undefined} />
+        <span>
+          J’accepte que KORIX utilise ces informations uniquement pour répondre à ma demande, conformément à la{" "}
+          <Link href="/politique-confidentialite">politique de confidentialité</Link>.
+        </span>
+      </label>
+      {errorFor("consent")}
+
+      {message ? <p className={`form-message form-message--${status}`} role="alert">{message}</p> : null}
+      <button className="button button--primary form-submit" type="submit" disabled={status === "sending"}>
+        {status === "sending" ? <><LoaderCircle className="spinner" aria-hidden="true" /> Envoi en cours…</> : <>Envoyer ma demande <ArrowRight aria-hidden="true" size={18} /></>}
+      </button>
+      <p className="form-note">Aucune inscription automatique à une newsletter. Vos informations ne sont pas revendues.</p>
+    </form>
+  );
+}
