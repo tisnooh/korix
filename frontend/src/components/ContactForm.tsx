@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, LoaderCircle } from "lucide-react";
 import {
@@ -14,12 +14,22 @@ import {
 
 type Status = "idle" | "sending" | "success" | "error";
 
+class SubmissionError extends Error {}
+
 export function ContactForm() {
   const formRef = useRef<HTMLFormElement>(null);
+  const successRef = useRef<HTMLDivElement>(null);
+  const submittingRef = useRef(false);
   const [startedAt, setStartedAt] = useState(() => Date.now());
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<ContactErrors>({});
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    if (status !== "success") return;
+    successRef.current?.focus({ preventScroll: true });
+    successRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [status]);
 
   const focusFirstError = (fieldErrors: ContactErrors) => {
     const first = Object.keys(fieldErrors)[0];
@@ -30,6 +40,7 @@ export function ContactForm() {
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (submittingRef.current) return;
     const formElement = event.currentTarget;
     setMessage("");
     const form = new FormData(formElement);
@@ -57,6 +68,7 @@ export function ContactForm() {
     }
 
     setErrors({});
+    submittingRef.current = true;
     setStatus("sending");
     try {
       const response = await fetch("/api/contact", {
@@ -64,14 +76,14 @@ export function ContactForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(validation.data),
       });
-      const result = (await response.json()) as { message?: string; errors?: ContactErrors };
+      const result = (await response.json().catch(() => ({}))) as { message?: string; errors?: ContactErrors };
 
       if (!response.ok) {
         if (result.errors) {
           setErrors(result.errors);
           focusFirstError(result.errors);
         }
-        throw new Error(result.message || "L’envoi n’a pas abouti.");
+        throw new SubmissionError(result.message || "L’envoi n’a pas abouti. Réessayez dans quelques instants.");
       }
 
       formElement.reset();
@@ -80,13 +92,19 @@ export function ContactForm() {
       window.dispatchEvent(new CustomEvent("korix:conversion", { detail: { event: "contact_form_sent" } }));
     } catch (error) {
       setStatus("error");
-      setMessage(error instanceof Error ? error.message : "Une erreur empêche momentanément l’envoi.");
+      setMessage(
+        error instanceof SubmissionError
+          ? error.message
+          : "Une erreur empêche momentanément l’envoi. Vérifiez votre connexion puis réessayez.",
+      );
+    } finally {
+      submittingRef.current = false;
     }
   }
 
   if (status === "success") {
     return (
-      <div className="form-success" role="status" data-testid="contact-success">
+      <div ref={successRef} className="form-success" role="status" tabIndex={-1} data-testid="contact-success">
         <CheckCircle2 aria-hidden="true" />
         <p className="eyebrow"><span /> Demande envoyée</p>
         <h3>Merci pour votre confiance.</h3>
@@ -110,26 +128,26 @@ export function ContactForm() {
     errors[field] ? <span className="field-error" id={`${field}-error`}>{errors[field]}</span> : null;
 
   return (
-    <form ref={formRef} className="contact-form" onSubmit={onSubmit} noValidate data-testid="contact-form">
+    <form ref={formRef} className="contact-form" onSubmit={onSubmit} noValidate data-testid="contact-form" aria-busy={status === "sending"}>
       <div className="form-grid">
         <label>
           <span>Nom</span>
-          <input name="name" autoComplete="name" minLength={2} required aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? "name-error" : undefined} />
+          <input name="name" autoComplete="name" minLength={2} maxLength={80} required aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? "name-error" : undefined} />
           {errorFor("name")}
         </label>
         <label>
-          <span>Entreprise</span>
-          <input name="company" autoComplete="organization" minLength={2} required aria-invalid={Boolean(errors.company)} aria-describedby={errors.company ? "company-error" : undefined} />
+          <span>Entreprise ou activité</span>
+          <input name="company" autoComplete="organization" minLength={2} maxLength={120} required aria-invalid={Boolean(errors.company)} aria-describedby={errors.company ? "company-error" : undefined} />
           {errorFor("company")}
         </label>
         <label>
           <span>E-mail</span>
-          <input name="email" type="email" inputMode="email" autoComplete="email" required aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "email-error" : undefined} />
+          <input name="email" type="email" inputMode="email" autoComplete="email" maxLength={160} required aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "email-error" : undefined} />
           {errorFor("email")}
         </label>
         <label>
           <span>Téléphone <small>(facultatif)</small></span>
-          <input name="phone" type="tel" inputMode="tel" autoComplete="tel" aria-invalid={Boolean(errors.phone)} aria-describedby={errors.phone ? "phone-error" : undefined} />
+          <input name="phone" type="tel" inputMode="tel" autoComplete="tel" maxLength={30} aria-invalid={Boolean(errors.phone)} aria-describedby={errors.phone ? "phone-error" : undefined} />
           {errorFor("phone")}
         </label>
         <label>

@@ -2,9 +2,13 @@
 const nextConfig = {
   poweredByHeader: false,
   compress: true,
+  turbopack: {
+    root: process.cwd(),
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 31536000,
+    qualities: [75, 82, 88, 90, 94],
   },
   async headers() {
     const developmentEval = process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : "";

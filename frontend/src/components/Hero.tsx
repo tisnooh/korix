@@ -41,7 +41,7 @@ export function Hero() {
             <span className="hero-title-line">activité.</span>
           </h1>
           <p className="hero-lead">
-            Sites modernes, rapides et optimisés pour convertir vos visiteurs en clients.
+            Des sites rapides et clairs, conçus pour présenter votre activité et faciliter les prises de contact.
           </p>
           <div className="hero-actions">
             <Link className="button button--primary" href="#contact" data-track="cta_hero_primary">

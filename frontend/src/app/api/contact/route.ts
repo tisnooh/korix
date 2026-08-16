@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { validateContactPayload } from "@/lib/contact";
 import { sendContactLead } from "@/lib/email";
 import { checkRateLimit } from "@/lib/rate-limit";
+import { isAllowedRequestOrigin } from "@/lib/request-origin";
 
 export const runtime = "nodejs";
 
@@ -13,19 +14,8 @@ function getClientIp(request: Request) {
   );
 }
 
-function isAllowedOrigin(request: Request) {
-  const origin = request.headers.get("origin");
-  if (!origin) return true;
-
-  const requestOrigin = new URL(request.url).origin;
-  const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL;
-  const allowedOrigins = new Set([requestOrigin]);
-  if (configuredUrl) allowedOrigins.add(new URL(configuredUrl).origin);
-  return allowedOrigins.has(origin);
-}
-
 export async function POST(request: Request) {
-  if (!isAllowedOrigin(request)) {
+  if (!isAllowedRequestOrigin(request)) {
     return NextResponse.json({ message: "Origine de la demande refusée." }, { status: 403 });
   }
 

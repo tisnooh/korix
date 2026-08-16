@@ -2,11 +2,13 @@
 
 import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
 import Link from "next/link";
+import {
+  readAnalyticsConsent,
+  saveAnalyticsConsent,
+  type AnalyticsConsent,
+} from "@/lib/analytics-consent";
 
-type Consent = "unknown" | "accepted" | "refused";
 type PostHogClient = typeof import("posthog-js").default;
-
-const storageKey = "korix-analytics-consent";
 
 export function ConsentManager() {
   const consent = useSyncExternalStore(
@@ -18,17 +20,18 @@ export function ConsentManager() {
         window.removeEventListener("korix:consent", onStoreChange);
       };
     },
-    () => {
-      const stored = window.localStorage.getItem(storageKey);
-      return stored === "accepted" || stored === "refused" ? stored : "unknown";
-    },
+    readAnalyticsConsent,
     () => "unknown",
-  ) as Consent;
+  ) as AnalyticsConsent;
   const clientRef = useRef<PostHogClient | null>(null);
 
   const initializeAnalytics = useCallback(async () => {
     const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-    if (!key || clientRef.current) return;
+    if (!key) return;
+    if (clientRef.current) {
+      clientRef.current.opt_in_capturing();
+      return;
+    }
     const { default: posthog } = await import("posthog-js");
     posthog.init(key, {
       api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://eu.i.posthog.com",
@@ -38,11 +41,19 @@ export function ConsentManager() {
       person_profiles: "identified_only",
       persistence: "localStorage+cookie",
     });
+    posthog.opt_in_capturing();
     clientRef.current = posthog;
   }, []);
 
   useEffect(() => {
-    if (consent === "accepted") void initializeAnalytics();
+    if (consent === "accepted") {
+      void initializeAnalytics();
+      return;
+    }
+    if (clientRef.current) {
+      clientRef.current.opt_out_capturing();
+      clientRef.current.reset();
+    }
   }, [consent, initializeAnalytics]);
 
   useEffect(() => {
@@ -62,19 +73,19 @@ export function ConsentManager() {
     };
   }, []);
 
-  const choose = (value: Exclude<Consent, "unknown">) => {
-    window.localStorage.setItem(storageKey, value);
+  const choose = (value: Exclude<AnalyticsConsent, "unknown">) => {
+    saveAnalyticsConsent(value);
     window.dispatchEvent(new Event("korix:consent"));
   };
 
   if (consent !== "unknown") return null;
 
   return (
-    <aside className="consent-banner" aria-labelledby="consent-title" data-testid="consent-banner">
+    <aside className="consent-banner" aria-labelledby="consent-title" data-testid="consent-banner" tabIndex={-1}>
       <div>
         <strong id="consent-title">Mesure d’audience respectueuse</strong>
         <p>
-          Avec votre accord, des statistiques anonymisées nous aident à améliorer ce site. Aucun enregistrement de session
+          Avec votre accord, des statistiques de fréquentation nous aident à améliorer ce site. Aucun enregistrement de session
           n’est activé. <Link href="/politique-confidentialite">En savoir plus</Link>
         </p>
       </div>

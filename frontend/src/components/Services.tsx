@@ -7,7 +7,7 @@ const services = [
     number: "01",
     icon: LayoutTemplate,
     title: "Site vitrine sur mesure",
-    text: "Présenter votre activité avec précision, inspirer confiance et générer des demandes qualifiées.",
+    text: "Présenter votre activité avec précision, inspirer confiance et faciliter les demandes de contact.",
   },
   {
     number: "02",
@@ -25,7 +25,7 @@ const services = [
     number: "04",
     icon: RefreshCcw,
     title: "Refonte stratégique",
-    text: "Transformer un site dépassé en outil moderne, performant et cohérent avec votre ambition.",
+    text: "Transformer un site dépassé en outil moderne, performant et cohérent avec vos contenus et vos objectifs.",
   },
 ] as const;
 
@@ -36,8 +36,8 @@ export function Services() {
         <div className="section-heading-row">
           <SectionIntro
             eyebrow="Nos expertises"
-            title={<>Le bon format pour le bon <em>objectif.</em></>}
-            text="Pas de formule générique : le périmètre, les contenus et la technologie sont définis selon votre activité."
+            title={<>Le bon site pour votre <em>objectif.</em></>}
+            text="Nous définissons le format et les fonctionnalités utiles selon votre activité, vos contenus et la façon dont vos clients vous trouvent."
           />
           <Link className="text-link" href="#contact" data-track="cta_services">
             Échanger sur votre besoin <ArrowRight aria-hidden="true" size={18} />
@@ -50,7 +50,14 @@ export function Services() {
               <div className="service-icon"><Icon aria-hidden="true" /></div>
               <h3>{title}</h3>
               <p>{text}</p>
-              <ArrowRight className="service-arrow" aria-hidden="true" />
+              <Link
+                className="service-arrow-link"
+                href="#contact"
+                aria-label={`Parler d’un projet de ${title.toLocaleLowerCase("fr")}`}
+                data-track={`service_${number}`}
+              >
+                <ArrowRight className="service-arrow" aria-hidden="true" />
+              </Link>
             </article>
           ))}
         </div>

@@ -68,7 +68,7 @@ export function validateContactPayload(input: unknown): {
 
   const errors: ContactErrors = {};
   if (data.name.length < 2) errors.name = "Indiquez votre nom complet.";
-  if (data.company.length < 2) errors.company = "Indiquez le nom de votre entreprise.";
+  if (data.company.length < 2) errors.company = "Indiquez le nom de votre entreprise ou activité.";
   if (!emailPattern.test(data.email)) errors.email = "Saisissez une adresse e-mail valide.";
   if (data.phone && !phonePattern.test(data.phone)) errors.phone = "Saisissez un numéro de téléphone valide.";
   if (!projectTypes.includes(data.projectType as (typeof projectTypes)[number])) {

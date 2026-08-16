@@ -26,9 +26,16 @@ test("la navigation, le carrousel et les liens internes fonctionnent", async ({ 
   await expect(page.locator("#services")).toBeInViewport();
 
   const activeBefore = page.locator('.carousel-dots button[aria-current="true"]');
-  await expect(activeBefore).toHaveAttribute("aria-label", /Le Goût Authentique/);
+  await expect(activeBefore).toHaveAttribute("aria-label", /Aurora/);
+  await expect(page.locator(".project-slide").nth(1)).toHaveAttribute("inert", "");
   await page.getByTestId("portfolio-next").click();
-  await expect(page.locator('.carousel-dots button[aria-current="true"]')).toHaveAttribute("aria-label", /Clinique Dentaire/);
+  await expect(page.locator('.carousel-dots button[aria-current="true"]')).toHaveAttribute("aria-label", /Dentala/);
+  await expect(page.locator(".project-slide").nth(0)).toHaveAttribute("inert", "");
+  await expect(page.locator(".project-slide").nth(1)).not.toHaveAttribute("inert");
+
+  const dotSize = await page.locator(".carousel-dots button").first().boundingBox();
+  expect(dotSize?.width).toBeGreaterThanOrEqual(24);
+  expect(dotSize?.height).toBeGreaterThanOrEqual(24);
 
   const hrefs = await page.locator('a[href^="/"]').evaluateAll((links) =>
     [...new Set(links.map((link) => (link as HTMLAnchorElement).getAttribute("href")).filter(Boolean))] as string[],
@@ -37,6 +44,14 @@ test("la navigation, le carrousel et les liens internes fonctionnent", async ({ 
     const response = await request.get(href);
     expect(response.ok(), `${href} doit répondre`).toBeTruthy();
   }
+});
+
+test("le choix de mesure d’audience reste modifiable", async ({ page }) => {
+  await page.getByRole("button", { name: "Gérer mes préférences" }).click();
+  await expect(page.getByTestId("consent-banner")).toBeVisible();
+  await expect(page.getByTestId("consent-banner")).toBeFocused();
+  await page.getByRole("button", { name: "Refuser" }).click();
+  await expect(page.getByTestId("consent-banner")).toHaveCount(0);
 });
 
 for (const viewport of [

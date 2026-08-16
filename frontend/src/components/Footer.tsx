@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight, Mail, Phone } from "lucide-react";
 import { Brand } from "@/components/Brand";
+import { ConsentPreferences } from "@/components/ConsentPreferences";
 import { navigation, serviceNames, siteConfig } from "@/lib/site-config";
 
 export function Footer() {
@@ -9,7 +10,7 @@ export function Footer() {
       <div className="container footer-grid">
         <div className="footer-brand">
           <Brand />
-          <p>Sites internet sur mesure pour entreprises ambitieuses.</p>
+          <p>Des sites internet clairs, rapides et adaptés aux besoins des entreprises.</p>
           <span>© {new Date().getFullYear()} KORIX. Tous droits réservés.</span>
         </div>
         <div>
@@ -35,6 +36,7 @@ export function Footer() {
       <div className="container footer-bottom">
         <Link href="/mentions-legales">Mentions légales</Link>
         <Link href="/politique-confidentialite">Politique de confidentialité</Link>
+        <ConsentPreferences />
         <a href="#top">Retour en haut ↑</a>
       </div>
     </footer>

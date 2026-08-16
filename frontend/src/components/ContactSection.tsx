@@ -5,7 +5,7 @@ const assurances = [
   { icon: FileCheck2, title: "Devis gratuit", text: "Un périmètre clair avant de commencer." },
   { icon: UserRoundCheck, title: "Suivi personnalisé", text: "Un interlocuteur impliqué dans votre projet." },
   { icon: PanelsTopLeft, title: "Propriété transmise", text: "Le site et ses accès vous appartiennent." },
-  { icon: MonitorSmartphone, title: "Qualité contrôlée", text: "Responsive, SEO, accessibilité et vitesse vérifiés." },
+  { icon: MonitorSmartphone, title: "Contrôles essentiels", text: "Affichage responsive, bases SEO, accessibilité et vitesse." },
 ] as const;
 
 export function ContactSection() {
@@ -15,10 +15,9 @@ export function ContactSection() {
       <div className="container contact-layout">
         <div className="contact-copy">
           <p className="eyebrow"><span /> Votre projet</p>
-          <h2 id="contact-title">Prêt à faire passer votre présence en ligne <em>au niveau supérieur&nbsp;?</em></h2>
+          <h2 id="contact-title">Parlons de votre activité et du site <em>dont vous avez besoin.</em></h2>
           <p>
-            Décrivez-nous votre besoin. Les informations ci-dessous permettent de préparer un premier échange utile,
-            sans vous faire perdre de temps.
+            Décrivez votre activité, votre objectif et vos contraintes. Nous utiliserons ces éléments pour préparer un échange concret.
           </p>
           <ul className="assurance-list">
             {assurances.map(({ icon: Icon, title, text }) => (

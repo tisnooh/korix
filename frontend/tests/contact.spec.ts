@@ -15,7 +15,7 @@ test("le formulaire signale clairement les erreurs", async ({ page }) => {
 
 test("une demande complète atteint le service d'envoi de test", async ({ page }) => {
   await page.getByLabel("Nom").fill("Camille Martin");
-  await page.getByLabel("Entreprise").fill("Atelier Martin");
+  await page.getByLabel("Entreprise ou activité").fill("Atelier Martin");
   await page.getByLabel("E-mail").fill("camille@example.com");
   await page.getByLabel(/Téléphone/).fill("+33 6 00 00 00 00");
   await page.getByLabel("Type de projet").selectOption("Site vitrine");

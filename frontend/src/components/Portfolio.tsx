@@ -30,8 +30,8 @@ export function Portfolio() {
       <div className="container portfolio-heading">
         <div className="section-intro">
           <p className="eyebrow"><span /> Nos réalisations</p>
-          <h2 id="portfolio-title">Des concepts qui rendent notre <em>exigence visible.</em></h2>
-          <p>Ces projets sont des démonstrations KORIX, présentées comme telles — jamais comme de faux clients.</p>
+          <h2 id="portfolio-title">Des concepts pour montrer notre <em>approche.</em></h2>
+          <p>Ces projets sont des démonstrations créatives réalisées par KORIX. Ils ne sont associés à aucun client.</p>
         </div>
         <div className="carousel-controls" aria-label="Contrôles du carrousel">
           <button type="button" onClick={() => emblaApi?.scrollPrev()} aria-label="Réalisation précédente" data-testid="portfolio-prev">
@@ -45,30 +45,39 @@ export function Portfolio() {
 
       <div className="portfolio-viewport" ref={emblaRef} data-testid="portfolio-carousel">
         <div className="portfolio-track">
-          {projects.map((project, index) => (
-            <article className="project-slide" key={project.slug} aria-label={`${index + 1} sur ${projects.length}`}>
-              <Image
-                src={project.image}
-                alt={project.alt}
-                fill
-                loading="lazy"
-                quality={82}
-                sizes="(max-width: 640px) 88vw, (max-width: 1024px) 72vw, 58vw"
-              />
-              <div className="project-shade" />
-              <div className="project-topline">
-                <span>{project.sector}</span>
-                <span className="concept-badge">Concept KORIX</span>
-              </div>
-              <div className="project-copy">
-                <h3>{project.title}</h3>
-                <p>{project.summary}</p>
-                <Link href={`/realisations/${project.slug}`} data-track={`project_${project.slug}`}>
-                  Découvrir le concept <ArrowUpRight aria-hidden="true" size={17} />
-                </Link>
-              </div>
-            </article>
-          ))}
+          {projects.map((project, index) => {
+            const isSelected = selected === index;
+            return (
+              <article
+                className="project-slide"
+                key={project.slug}
+                aria-label={`${index + 1} sur ${projects.length}`}
+                aria-hidden={!isSelected}
+                inert={!isSelected}
+              >
+                <Image
+                  src={project.image}
+                  alt={project.alt}
+                  fill
+                  loading={isSelected ? "eager" : "lazy"}
+                  quality={82}
+                  sizes="(max-width: 640px) 88vw, (max-width: 1024px) 72vw, 58vw"
+                />
+                <div className="project-shade" />
+                <div className="project-topline">
+                  <span>{project.sector}</span>
+                  <span className="concept-badge">Concept KORIX</span>
+                </div>
+                <div className="project-copy">
+                  <h3>{project.title}</h3>
+                  <p>{project.summary}</p>
+                  <Link href={`/realisations/${project.slug}`} data-track={`project_${project.slug}`}>
+                    Découvrir le concept <ArrowUpRight aria-hidden="true" size={17} />
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
 

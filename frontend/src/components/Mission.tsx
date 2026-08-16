@@ -5,17 +5,17 @@ const pillars = [
   {
     icon: Crosshair,
     title: "Attirer",
-    text: "Une identité digitale qui capte l’attention et rend votre positionnement immédiatement lisible.",
+    text: "Une identité visuelle cohérente avec votre métier, reconnaissable dès les premières secondes.",
   },
   {
     icon: ChartNoAxesCombined,
     title: "Convaincre",
-    text: "Un parcours fluide qui répond aux bonnes questions et conduit naturellement vers la prise de contact.",
+    text: "Des contenus organisés autour des questions que vos prospects se posent avant de vous contacter.",
   },
   {
     icon: Rocket,
     title: "Développer",
-    text: "Une base rapide, responsive et évolutive conçue pour accompagner durablement votre activité.",
+    text: "Un site rapide, accessible et simple à faire évoluer lorsque votre activité avance.",
   },
 ] as const;
 
@@ -26,8 +26,8 @@ export function Mission() {
         <div>
           <SectionIntro
             eyebrow="Notre mission"
-            title={<>Votre réussite commence par un site <em>remarquable.</em></>}
-            text="Chaque décision de design sert un objectif précis : rendre votre entreprise plus claire, plus crédible et plus simple à choisir."
+            title={<>Un site qui aide vos clients à <em>vous choisir.</em></>}
+            text="Nous travaillons le message, le parcours et la réalisation technique pour que votre offre soit comprise rapidement, sur ordinateur comme sur mobile."
           />
         </div>
         <div className="mission-grid">

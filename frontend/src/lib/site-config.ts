@@ -7,11 +7,14 @@ export const navigation = [
 
 const trimTrailingSlash = (value: string) => value.replace(/\/$/, "");
 
+const deploymentHost = process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL;
+const defaultSiteUrl = deploymentHost ? `https://${deploymentHost}` : "http://localhost:3000";
+
 export const siteConfig = {
   name: "KORIX",
   description:
-    "KORIX conçoit des sites internet sur mesure, rapides et pensés pour transformer une présence en ligne en levier de développement.",
-  url: trimTrailingSlash(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
+    "KORIX conçoit des sites internet clairs, rapides et adaptés aux besoins des entreprises.",
+  url: trimTrailingSlash(process.env.NEXT_PUBLIC_SITE_URL || defaultSiteUrl),
   publicEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "",
   phone: process.env.NEXT_PUBLIC_PHONE || "",
   socials: [

@@ -64,7 +64,7 @@ export default async function ProjectPage({ params }: Props) {
       <section className="container case-cta">
         <div>
           <p className="eyebrow"><span /> Votre projet</p>
-          <h2>Construisons une présence qui vous ressemble vraiment.</h2>
+          <h2>Présentez-nous votre activité et le site dont vous avez besoin.</h2>
         </div>
         <Link className="button button--primary" href="/#contact" data-track={`cta_case_${project.slug}`}>
           Démarrer un projet <ArrowRight aria-hidden="true" size={18} />
