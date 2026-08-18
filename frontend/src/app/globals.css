@@ -1118,12 +1118,14 @@ em {
 .contact-planet {
   position: absolute;
   z-index: -2;
-  right: -16%;
-  bottom: -19%;
-  width: 85%;
-  height: 64%;
-  opacity: 0.48;
+  right: -8%;
+  bottom: -6%;
+  width: 94%;
+  height: 58%;
+  opacity: 0.43;
   background: url("/assets/planet-wide.webp") center top / cover no-repeat;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 13%, #000 68%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 13%, #000 68%, transparent 100%);
   mix-blend-mode: screen;
   filter: saturate(1.15);
 }
@@ -2312,9 +2314,9 @@ em {
   }
 
   .contact-planet {
-    right: -30%;
-    bottom: -7%;
-    width: 130%;
+    right: -22%;
+    bottom: -3%;
+    width: 122%;
     height: 42%;
   }
 
