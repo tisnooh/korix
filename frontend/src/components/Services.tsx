@@ -50,14 +50,6 @@ export function Services() {
               <div className="service-icon"><Icon aria-hidden="true" /></div>
               <h3>{title}</h3>
               <p>{text}</p>
-              <Link
-                className="service-arrow-link"
-                href="#contact"
-                aria-label={`Parler d’un projet de ${title.toLocaleLowerCase("fr")}`}
-                data-track={`service_${number}`}
-              >
-                <ArrowRight className="service-arrow" aria-hidden="true" />
-              </Link>
             </article>
           ))}
         </div>

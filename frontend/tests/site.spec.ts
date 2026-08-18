@@ -46,6 +46,25 @@ test("la navigation, le carrousel et les liens internes fonctionnent", async ({ 
   }
 });
 
+test("les CTA, les pages légales et Instagram pointent vers des destinations valides", async ({ page, request }) => {
+  await expect(page.locator('.hero-actions a[href="#contact"]')).toHaveCount(1);
+  await expect(page.locator('.hero-actions a[href="#realisations"]')).toHaveCount(1);
+  await expect(page.locator(".service-arrow-link")).toHaveCount(0);
+
+  for (const href of ["/mentions-legales", "/politique-confidentialite"]) {
+    const response = await request.get(href);
+    expect(response.ok(), `${href} doit répondre`).toBeTruthy();
+  }
+
+  const instagram = page.locator('a[aria-label="Instagram de KORIX"]');
+  await expect(instagram).toHaveCount(3);
+  for (const link of await instagram.all()) {
+    await expect(link).toHaveAttribute("href", "https://www.instagram.com/korixagency");
+    await expect(link).toHaveAttribute("target", "_blank");
+    await expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  }
+});
+
 test("le choix de mesure d’audience reste modifiable", async ({ page }) => {
   await page.getByRole("button", { name: "Gérer mes préférences" }).click();
   await expect(page.getByTestId("consent-banner")).toBeVisible();
@@ -72,6 +91,12 @@ test("le menu mobile est utilisable au clavier", async ({ page }) => {
   await page.getByTestId("menu-open").click();
   await expect(page.getByRole("dialog", { name: "Menu principal" })).toBeVisible();
   await expect(page.getByTestId("menu-close")).toBeFocused();
+  await expect(page.getByRole("link", { name: "Instagram de KORIX" })).toBeVisible();
+  await page.locator('.mobile-nav a[href="/#services"]').click();
+  await expect(page.getByRole("dialog", { name: "Menu principal" })).not.toBeVisible();
+  await expect(page.locator("#services")).toBeInViewport();
+
+  await page.getByTestId("menu-open").click();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog", { name: "Menu principal" })).not.toBeVisible();
 });

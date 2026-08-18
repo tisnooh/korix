@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, Mail, Phone } from "lucide-react";
+import { ArrowUpRight, Instagram, Mail, Phone } from "lucide-react";
 import { Brand } from "@/components/Brand";
 import { ConsentPreferences } from "@/components/ConsentPreferences";
 import { navigation, serviceNames, siteConfig } from "@/lib/site-config";
@@ -28,7 +28,17 @@ export function Footer() {
             {siteConfig.publicEmail ? <li><a href={`mailto:${siteConfig.publicEmail}`}><Mail aria-hidden="true" size={14} /> {siteConfig.publicEmail}</a></li> : null}
             {siteConfig.phone ? <li><a href={`tel:${siteConfig.phone.replace(/\s/g, "")}`}><Phone aria-hidden="true" size={14} /> {siteConfig.phone}</a></li> : null}
             {siteConfig.socials.map((social) => (
-              <li key={social.label}><a href={social.href} target="_blank" rel="noreferrer">{social.label} <ArrowUpRight aria-hidden="true" size={14} /></a></li>
+              <li key={social.label}>
+                <a
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.label === "Instagram" ? "Instagram de KORIX" : `${social.label} de KORIX`}
+                >
+                  {social.label === "Instagram" ? <Instagram aria-hidden="true" size={14} /> : null}
+                  {social.label} <ArrowUpRight aria-hidden="true" size={14} />
+                </a>
+              </li>
             ))}
           </ul>
         </div>
@@ -37,7 +47,7 @@ export function Footer() {
         <Link href="/mentions-legales">Mentions légales</Link>
         <Link href="/politique-confidentialite">Politique de confidentialité</Link>
         <ConsentPreferences />
-        <a href="#top">Retour en haut ↑</a>
+        <Link href="/#top">Retour en haut ↑</Link>
       </div>
     </footer>
   );

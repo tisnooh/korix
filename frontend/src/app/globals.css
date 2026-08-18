@@ -26,7 +26,10 @@
 html {
   color-scheme: dark;
   scroll-behavior: smooth;
-  scroll-padding-top: 88px;
+}
+
+section[id] {
+  scroll-margin-top: 88px;
 }
 
 body {
@@ -223,6 +226,25 @@ em {
   gap: 16px;
 }
 
+.header-instagram {
+  display: inline-grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: #aeb7c7;
+  background: rgba(8, 11, 18, 0.58);
+  transition: border-color 180ms ease, color 180ms ease, background 180ms ease;
+}
+
+.header-instagram:hover,
+.header-instagram:focus-visible {
+  border-color: var(--line-strong);
+  color: var(--blue-light);
+  background: rgba(8, 20, 44, 0.75);
+}
+
 .button {
   display: inline-flex;
   min-height: 48px;
@@ -382,6 +404,21 @@ em {
 
 .menu-cta {
   width: 100%;
+}
+
+.menu-instagram {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  color: #b9c1d0;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.menu-instagram svg {
+  color: var(--blue-light);
 }
 
 .hero {
@@ -743,16 +780,10 @@ em {
 .service-row {
   display: grid;
   min-height: 126px;
-  grid-template-columns: 54px 68px minmax(240px, 0.75fr) minmax(320px, 1fr) 36px;
+  grid-template-columns: 54px 68px minmax(240px, 0.75fr) minmax(320px, 1fr);
   gap: 24px;
   align-items: center;
   border-bottom: 1px solid var(--line);
-  transition: background 220ms ease, padding 220ms ease;
-}
-
-.service-row:hover {
-  padding-inline: 16px;
-  background: linear-gradient(90deg, rgba(0, 87, 255, 0.06), transparent 70%);
 }
 
 .service-number {
@@ -783,26 +814,6 @@ em {
   color: var(--muted);
   font-size: 14px;
   line-height: 1.65;
-}
-
-.service-arrow {
-  width: 20px;
-  color: var(--subtle);
-  transition: color 180ms, transform 180ms;
-}
-
-.service-arrow-link {
-  display: grid;
-  width: 44px;
-  height: 44px;
-  place-items: center;
-  border-radius: 50%;
-}
-
-.service-row:hover .service-arrow,
-.service-arrow-link:focus-visible .service-arrow {
-  color: var(--blue-light);
-  transform: translateX(5px);
 }
 
 .portfolio-section {
@@ -1809,6 +1820,10 @@ em {
     display: none;
   }
 
+  .header-instagram {
+    display: none;
+  }
+
   .menu-trigger {
     width: 54px;
     height: 54px;
@@ -1907,7 +1922,7 @@ em {
   }
 
   .service-row {
-    grid-template-columns: 46px 60px 0.82fr 1.18fr 24px;
+    grid-template-columns: 46px 60px 0.82fr 1.18fr;
     gap: 16px;
   }
 
@@ -2031,7 +2046,7 @@ em {
   }
 
   .mobile-nav {
-    margin: clamp(36px, 7vh, 60px) 0 0;
+    margin: clamp(24px, 5vh, 44px) 0 12px;
   }
 
   .mobile-nav a {
@@ -2042,8 +2057,12 @@ em {
 
   .menu-cta {
     min-height: 54px;
-    margin-top: 32px;
+    margin-top: 12px;
     flex: 0 0 auto;
+  }
+
+  .menu-instagram {
+    margin: 0;
   }
 
   .hero {
@@ -2163,13 +2182,9 @@ em {
 
   .service-row {
     min-height: 0;
-    grid-template-columns: 42px 1fr 22px;
+    grid-template-columns: 42px 1fr;
     gap: 16px 14px;
     padding: 28px 0;
-  }
-
-  .service-row:hover {
-    padding-inline: 10px;
   }
 
   .service-number {
@@ -2188,19 +2203,8 @@ em {
   }
 
   .service-row p {
-    grid-column: 2 / 4;
+    grid-column: 2;
     grid-row: 2;
-  }
-
-  .service-arrow {
-    width: 18px;
-  }
-
-  .service-arrow-link {
-    grid-column: 3;
-    grid-row: 1;
-    width: 36px;
-    height: 36px;
   }
 
   .portfolio-viewport {
@@ -2315,7 +2319,7 @@ em {
 
   .footer-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 36px 24px;
+    gap: 22px 20px;
   }
 
   .footer-brand,
@@ -2327,11 +2331,19 @@ em {
     grid-row: auto;
   }
 
+  .footer-brand p {
+    margin: 12px 0 14px;
+  }
+
+  .footer-grid > div:last-child ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .footer-bottom {
     flex-wrap: wrap;
     gap: 0 16px;
-    margin-top: 32px;
-    padding-top: 16px;
+    margin-top: 22px;
+    padding-top: 12px;
   }
 
   .footer-bottom > a:last-child {
@@ -2340,7 +2352,7 @@ em {
   }
 
   .site-footer {
-    padding: 56px 0 max(40px, env(safe-area-inset-bottom, 0px));
+    padding: 40px 0 max(24px, env(safe-area-inset-bottom, 0px));
   }
 
   .footer-grid h2 {
@@ -2357,7 +2369,13 @@ em {
   }
 
   .footer-grid a {
-    min-height: 20px;
+    min-height: 42px;
+  }
+
+  .footer-bottom a,
+  .footer-preferences {
+    min-height: 42px;
+    line-height: 42px;
   }
 
   .consent-banner {

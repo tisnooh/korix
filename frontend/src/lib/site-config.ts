@@ -3,7 +3,10 @@ export const navigation = [
   { label: "Services", href: "/#services" },
   { label: "Processus", href: "/#processus" },
   { label: "À propos", href: "/#mission" },
+  { label: "Contact", href: "/#contact" },
 ] as const;
+
+export const instagramUrl = "https://www.instagram.com/korixagency";
 
 const trimTrailingSlash = (value: string) => value.replace(/\/$/, "");
 
@@ -19,7 +22,7 @@ export const siteConfig = {
   phone: process.env.NEXT_PUBLIC_PHONE || "",
   socials: [
     { label: "LinkedIn", href: process.env.NEXT_PUBLIC_LINKEDIN_URL || "" },
-    { label: "Instagram", href: process.env.NEXT_PUBLIC_INSTAGRAM_URL || "" },
+    { label: "Instagram", href: instagramUrl },
   ].filter((social) => social.href),
   legal: {
     name: process.env.NEXT_PUBLIC_LEGAL_NAME || "KORIX",

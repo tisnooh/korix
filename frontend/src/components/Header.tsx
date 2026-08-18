@@ -2,9 +2,9 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { ArrowUpRight, Instagram, Menu, X } from "lucide-react";
 import { Brand } from "@/components/Brand";
-import { navigation } from "@/lib/site-config";
+import { instagramUrl, navigation } from "@/lib/site-config";
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -72,6 +72,15 @@ export function Header() {
           ))}
         </nav>
         <div className="header-actions">
+          <a
+            className="header-instagram"
+            href={instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram de KORIX"
+          >
+            <Instagram aria-hidden="true" size={19} />
+          </a>
           <Link className="button button--outline header-cta" href="/#contact" data-track="cta_header">
             Démarrer un projet
             <ArrowUpRight aria-hidden="true" size={17} />
@@ -116,6 +125,16 @@ export function Header() {
               </Link>
             ))}
           </nav>
+          <a
+            className="menu-instagram"
+            href={instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram de KORIX"
+          >
+            <Instagram aria-hidden="true" size={19} />
+            Instagram <span aria-hidden="true">↗</span>
+          </a>
           <Link className="button button--primary menu-cta" href="/#contact" onClick={() => closeMenu(false)} data-track="cta_menu">
             Parler de votre projet
             <ArrowUpRight aria-hidden="true" size={18} />
