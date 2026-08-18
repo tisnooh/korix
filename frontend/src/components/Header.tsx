@@ -12,9 +12,11 @@ export function Header() {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
-  const closeMenu = useCallback(() => {
+  const closeMenu = useCallback((restoreFocus = true) => {
     setOpen(false);
-    requestAnimationFrame(() => openButtonRef.current?.focus());
+    if (restoreFocus) {
+      requestAnimationFrame(() => openButtonRef.current?.focus({ preventScroll: true }));
+    }
   }, []);
 
   const openMenu = () => {
@@ -24,7 +26,11 @@ export function Header() {
   useEffect(() => {
     if (!open) return;
     const previousOverflow = document.body.style.overflow;
+    const previousRootOverflow = document.documentElement.style.overflow;
+    const previousOverscrollBehavior = document.body.style.overscrollBehavior;
     document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overscrollBehavior = "none";
     // Let the click sequence complete before moving focus into the dialog.
     const focusTimer = window.setTimeout(() => closeButtonRef.current?.focus({ preventScroll: true }), 50);
     const onKeyDown = (event: KeyboardEvent) => {
@@ -48,6 +54,8 @@ export function Header() {
     return () => {
       window.clearTimeout(focusTimer);
       document.body.style.overflow = previousOverflow;
+      document.documentElement.style.overflow = previousRootOverflow;
+      document.body.style.overscrollBehavior = previousOverscrollBehavior;
       window.removeEventListener("keydown", onKeyDown);
     };
   }, [closeMenu, open]);
@@ -84,7 +92,7 @@ export function Header() {
       </div>
 
       <div className={`menu-layer${open ? " is-open" : ""}`} aria-hidden={!open}>
-        <button className="menu-backdrop" aria-label="Fermer le menu" onClick={closeMenu} />
+        <button className="menu-backdrop" aria-label="Fermer le menu" onClick={() => closeMenu()} />
         <div ref={panelRef} className="menu-panel" id="site-menu" role="dialog" aria-modal="true" aria-label="Menu principal">
           <div className="menu-panel-head">
             <Brand compact />
@@ -93,7 +101,7 @@ export function Header() {
               className="menu-trigger"
               type="button"
               aria-label="Fermer le menu"
-              onClick={closeMenu}
+              onClick={() => closeMenu()}
               data-testid="menu-close"
             >
               <X aria-hidden="true" size={21} />
@@ -101,14 +109,14 @@ export function Header() {
           </div>
           <nav className="mobile-nav" aria-label="Navigation mobile">
             {navigation.map((item, index) => (
-              <Link key={item.href} href={item.href} onClick={closeMenu}>
+              <Link key={item.href} href={item.href} onClick={() => closeMenu(false)}>
                 <span>0{index + 1}</span>
                 {item.label}
                 <ArrowUpRight aria-hidden="true" size={20} />
               </Link>
             ))}
           </nav>
-          <Link className="button button--primary menu-cta" href="/#contact" onClick={closeMenu} data-track="cta_menu">
+          <Link className="button button--primary menu-cta" href="/#contact" onClick={() => closeMenu(false)} data-track="cta_menu">
             Parler de votre projet
             <ArrowUpRight aria-hidden="true" size={18} />
           </Link>
