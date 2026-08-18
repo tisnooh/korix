@@ -1,12 +1,13 @@
 export const navigation = [
-  { label: "Réalisations", href: "/#realisations" },
-  { label: "Services", href: "/#services" },
+  { label: "Réalisations", href: "/realisations" },
+  { label: "Services", href: "/services" },
   { label: "Processus", href: "/#processus" },
-  { label: "À propos", href: "/#mission" },
-  { label: "Contact", href: "/#contact" },
+  { label: "À propos", href: "/a-propos" },
+  { label: "Contact", href: "/contact" },
 ] as const;
 
 export const instagramUrl = "https://www.instagram.com/korixagency";
+export const whatsappUrl = "https://wa.me/33759354091";
 
 const trimTrailingSlash = (value: string) => value.replace(/\/$/, "");
 
@@ -18,12 +19,11 @@ export const siteConfig = {
   description:
     "KORIX conçoit des sites internet clairs, rapides et adaptés aux besoins des entreprises.",
   url: trimTrailingSlash(process.env.NEXT_PUBLIC_SITE_URL || defaultSiteUrl),
-  publicEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "",
-  phone: process.env.NEXT_PUBLIC_PHONE || "",
+  publicEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "korixagency@gmail.com",
+  phone: process.env.NEXT_PUBLIC_PHONE || "+33 7 59 35 40 91",
   socials: [
-    { label: "LinkedIn", href: process.env.NEXT_PUBLIC_LINKEDIN_URL || "" },
     { label: "Instagram", href: instagramUrl },
-  ].filter((social) => social.href),
+  ],
   legal: {
     name: process.env.NEXT_PUBLIC_LEGAL_NAME || "KORIX",
     form: process.env.NEXT_PUBLIC_LEGAL_FORM || "",
@@ -34,10 +34,3 @@ export const siteConfig = {
     hostAddress: process.env.NEXT_PUBLIC_HOST_ADDRESS || "",
   },
 } as const;
-
-export const serviceNames = [
-  "Site vitrine sur mesure",
-  "Site e-commerce",
-  "Landing page de conversion",
-  "Refonte stratégique",
-] as const;

@@ -44,10 +44,10 @@ export function Hero() {
             Des sites rapides et clairs, conçus pour présenter votre activité et faciliter les prises de contact.
           </p>
           <div className="hero-actions">
-            <Link className="button button--primary" href="#contact" data-track="cta_hero_primary">
+            <Link className="button button--primary" href="/contact" data-track="cta_hero_primary">
               Démarrer un projet <ArrowRight aria-hidden="true" size={18} />
             </Link>
-            <Link className="button button--ghost" href="#realisations" data-track="cta_hero_projects">
+            <Link className="button button--ghost" href="/realisations" data-track="cta_hero_projects">
               Voir nos réalisations <ArrowRight aria-hidden="true" size={18} />
             </Link>
           </div>

@@ -16,14 +16,15 @@ test("la page expose le SEO et une structure sémantique", async ({ page }) => {
 });
 
 test("la navigation, le carrousel et les liens internes fonctionnent", async ({ page, request }) => {
-  const desktopServices = page.locator('.desktop-nav a[href="/#services"]');
+  const desktopServices = page.locator('.desktop-nav a[href="/services"]');
   if (await desktopServices.isVisible()) {
     await desktopServices.click();
   } else {
     await page.getByTestId("menu-open").click();
-    await page.locator('.mobile-nav a[href="/#services"]').click();
+    await page.locator('.mobile-nav a[href="/services"]').click();
   }
-  await expect(page.locator("#services")).toBeInViewport();
+  await expect(page).toHaveURL(/\/services$/);
+  await page.goto("/#realisations");
 
   const activeBefore = page.locator('.carousel-dots button[aria-current="true"]');
   await expect(activeBefore).toHaveAttribute("aria-label", /Aurora/);
@@ -47,9 +48,9 @@ test("la navigation, le carrousel et les liens internes fonctionnent", async ({ 
 });
 
 test("les CTA, les pages légales et Instagram pointent vers des destinations valides", async ({ page, request }) => {
-  await expect(page.locator('.hero-actions a[href="#contact"]')).toHaveCount(1);
-  await expect(page.locator('.hero-actions a[href="#realisations"]')).toHaveCount(1);
-  await expect(page.locator(".service-arrow-link")).toHaveCount(0);
+  await expect(page.locator('.hero-actions a[href="/contact"]')).toHaveCount(1);
+  await expect(page.locator('.hero-actions a[href="/realisations"]')).toHaveCount(1);
+  await expect(page.locator('.service-row[href^="/services/"]')).toHaveCount(4);
 
   for (const href of ["/mentions-legales", "/politique-confidentialite"]) {
     const response = await request.get(href);
@@ -92,9 +93,9 @@ test("le menu mobile est utilisable au clavier", async ({ page }) => {
   await expect(page.getByRole("dialog", { name: "Menu principal" })).toBeVisible();
   await expect(page.getByTestId("menu-close")).toBeFocused();
   await expect(page.getByRole("link", { name: "Instagram de KORIX" })).toBeVisible();
-  await page.locator('.mobile-nav a[href="/#services"]').click();
+  await page.locator('.mobile-nav a[href="/services"]').click();
   await expect(page.getByRole("dialog", { name: "Menu principal" })).not.toBeVisible();
-  await expect(page.locator("#services")).toBeInViewport();
+  await expect(page).toHaveURL(/\/services$/);
 
   await page.getByTestId("menu-open").click();
   await page.keyboard.press("Escape");

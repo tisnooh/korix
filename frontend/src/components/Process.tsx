@@ -15,7 +15,7 @@ export function Process() {
       <div className="container process-layout">
         <div>
           <SectionIntro eyebrow="Notre processus" title={<>De la première discussion à la <em>mise en ligne.</em></>} />
-          <Link className="text-link process-link" href="#contact" data-track="cta_process">
+          <Link className="text-link process-link" href="/contact" data-track="cta_process">
             Décrire votre projet <ArrowRight aria-hidden="true" size={18} />
           </Link>
         </div>

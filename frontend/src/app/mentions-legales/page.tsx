@@ -25,7 +25,7 @@ export default function LegalPage() {
           {legal.registration ? <><dt>Immatriculation</dt><dd>{legal.registration}</dd></> : null}
           {legal.publicationDirector ? <><dt>Direction de la publication</dt><dd>{legal.publicationDirector}</dd></> : null}
         </dl>
-        <p>Pour contacter l’éditeur, utilisez le <Link href="/#contact">formulaire de projet</Link>.</p>
+        <p>Pour contacter l’éditeur, utilisez le <Link href="/contact">formulaire de projet</Link>.</p>
       </section>
 
       {legal.hostName ? (

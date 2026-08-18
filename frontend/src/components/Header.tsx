@@ -81,7 +81,7 @@ export function Header() {
           >
             <Instagram aria-hidden="true" size={19} />
           </a>
-          <Link className="button button--outline header-cta" href="/#contact" data-track="cta_header">
+          <Link className="button button--outline header-cta" href="/contact" data-track="cta_header">
             Démarrer un projet
             <ArrowUpRight aria-hidden="true" size={17} />
           </Link>
@@ -135,7 +135,7 @@ export function Header() {
             <Instagram aria-hidden="true" size={19} />
             Instagram <span aria-hidden="true">↗</span>
           </a>
-          <Link className="button button--primary menu-cta" href="/#contact" onClick={() => closeMenu(false)} data-track="cta_menu">
+          <Link className="button button--primary menu-cta" href="/contact" onClick={() => closeMenu(false)} data-track="cta_menu">
             Parler de votre projet
             <ArrowUpRight aria-hidden="true" size={18} />
           </Link>

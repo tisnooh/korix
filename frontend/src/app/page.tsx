@@ -4,7 +4,8 @@ import { Mission } from "@/components/Mission";
 import { Portfolio } from "@/components/Portfolio";
 import { Process } from "@/components/Process";
 import { Services } from "@/components/Services";
-import { serviceNames, siteConfig } from "@/lib/site-config";
+import { services } from "@/lib/services";
+import { siteConfig } from "@/lib/site-config";
 
 export default function HomePage() {
   const structuredData = {
@@ -18,7 +19,7 @@ export default function HomePage() {
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Création de sites internet",
-      itemListElement: serviceNames.map((name) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name } })),
+      itemListElement: services.map((service) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: service.title } })),
     },
   };
 

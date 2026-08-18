@@ -31,7 +31,7 @@ export default async function ProjectPage({ params }: Props) {
   return (
     <article className="case-page">
       <div className="container case-heading">
-        <Link className="back-link" href="/#realisations"><ArrowLeft aria-hidden="true" size={17} /> Toutes les réalisations</Link>
+        <Link className="back-link" href="/realisations"><ArrowLeft aria-hidden="true" size={17} /> Toutes les réalisations</Link>
         <p className="eyebrow"><span /> {project.sector}</p>
         <div className="case-title-row">
           <h1>{project.title}</h1>
@@ -66,7 +66,7 @@ export default async function ProjectPage({ params }: Props) {
           <p className="eyebrow"><span /> Votre projet</p>
           <h2>Présentez-nous votre activité et le site dont vous avez besoin.</h2>
         </div>
-        <Link className="button button--primary" href="/#contact" data-track={`cta_case_${project.slug}`}>
+        <Link className="button button--primary" href="/contact" data-track={`cta_case_${project.slug}`}>
           Démarrer un projet <ArrowRight aria-hidden="true" size={18} />
         </Link>
       </section>

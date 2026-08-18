@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { ArrowUpRight, Instagram, Mail, Phone } from "lucide-react";
+import { ArrowUpRight, Instagram, Mail, MessageCircle, Phone } from "lucide-react";
 import { Brand } from "@/components/Brand";
 import { ConsentPreferences } from "@/components/ConsentPreferences";
-import { navigation, serviceNames, siteConfig } from "@/lib/site-config";
+import { services } from "@/lib/services";
+import { navigation, siteConfig, whatsappUrl } from "@/lib/site-config";
 
 export function Footer() {
   return (
@@ -19,14 +20,15 @@ export function Footer() {
         </div>
         <div>
           <h2>Services</h2>
-          <ul>{serviceNames.map((service) => <li key={service}><Link href="/#services">{service}</Link></li>)}</ul>
+          <ul>{services.map((service) => <li key={service.slug}><Link href={`/services/${service.slug}`}>{service.shortTitle}</Link></li>)}</ul>
         </div>
         <div>
           <h2>Contact</h2>
           <ul>
-            <li><Link href="/#contact">Formulaire de projet <ArrowUpRight aria-hidden="true" size={14} /></Link></li>
+            <li><Link href="/contact">Formulaire de projet <ArrowUpRight aria-hidden="true" size={14} /></Link></li>
             {siteConfig.publicEmail ? <li><a href={`mailto:${siteConfig.publicEmail}`}><Mail aria-hidden="true" size={14} /> {siteConfig.publicEmail}</a></li> : null}
             {siteConfig.phone ? <li><a href={`tel:${siteConfig.phone.replace(/\s/g, "")}`}><Phone aria-hidden="true" size={14} /> {siteConfig.phone}</a></li> : null}
+            <li><a href={whatsappUrl} target="_blank" rel="noopener noreferrer"><MessageCircle aria-hidden="true" size={14} /> WhatsApp <ArrowUpRight aria-hidden="true" size={14} /></a></li>
             {siteConfig.socials.map((social) => (
               <li key={social.label}>
                 <a

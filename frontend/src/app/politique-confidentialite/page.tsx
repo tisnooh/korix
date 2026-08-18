@@ -51,7 +51,7 @@ export default function PrivacyPage() {
         <h2>Vos droits</h2>
         <p>
           Vous pouvez demander l’accès, la rectification, l’effacement, la limitation ou la portabilité de vos données, et retirer votre consentement.
-          Adressez votre demande via le <Link href="/#contact">formulaire de contact</Link> en précisant qu’elle concerne vos données personnelles.
+          Adressez votre demande via le <Link href="/contact">formulaire de contact</Link> en précisant qu’elle concerne vos données personnelles.
         </p>
       </section>
 

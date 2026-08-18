@@ -1,33 +1,15 @@
 import Link from "next/link";
 import { ArrowRight, Blocks, LayoutTemplate, RefreshCcw, ShoppingBag } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { SectionIntro } from "@/components/SectionIntro";
+import { services } from "@/lib/services";
 
-const services = [
-  {
-    number: "01",
-    icon: LayoutTemplate,
-    title: "Site vitrine sur mesure",
-    text: "Présenter votre activité avec précision, inspirer confiance et faciliter les demandes de contact.",
-  },
-  {
-    number: "02",
-    icon: ShoppingBag,
-    title: "Site e-commerce",
-    text: "Construire une expérience d’achat rapide, rassurante et simple à administrer au quotidien.",
-  },
-  {
-    number: "03",
-    icon: Blocks,
-    title: "Landing page",
-    text: "Concentrer votre message et votre acquisition sur une page conçue pour une action précise.",
-  },
-  {
-    number: "04",
-    icon: RefreshCcw,
-    title: "Refonte stratégique",
-    text: "Transformer un site dépassé en outil moderne, performant et cohérent avec vos contenus et vos objectifs.",
-  },
-] as const;
+const serviceIcons: Record<string, LucideIcon> = {
+  "site-vitrine-sur-mesure": LayoutTemplate,
+  "site-e-commerce": ShoppingBag,
+  "landing-page": Blocks,
+  "refonte-strategique": RefreshCcw,
+};
 
 export function Services() {
   return (
@@ -39,19 +21,23 @@ export function Services() {
             title={<>Le bon site pour votre <em>objectif.</em></>}
             text="Nous définissons le format et les fonctionnalités utiles selon votre activité, vos contenus et la façon dont vos clients vous trouvent."
           />
-          <Link className="text-link" href="#contact" data-track="cta_services">
-            Échanger sur votre besoin <ArrowRight aria-hidden="true" size={18} />
+          <Link className="text-link" href="/services" data-track="cta_services">
+            Découvrir tous les services <ArrowRight aria-hidden="true" size={18} />
           </Link>
         </div>
         <div className="services-list">
-          {services.map(({ number, icon: Icon, title, text }) => (
-            <article className="service-row" key={title}>
-              <span className="service-number">{number}</span>
-              <div className="service-icon"><Icon aria-hidden="true" /></div>
-              <h3>{title}</h3>
-              <p>{text}</p>
-            </article>
-          ))}
+          {services.map((service, index) => {
+            const Icon = serviceIcons[service.slug];
+            return (
+              <Link className="service-row" href={`/services/${service.slug}`} key={service.slug}>
+                <span className="service-number">{String(index + 1).padStart(2, "0")}</span>
+                <div className="service-icon"><Icon aria-hidden="true" /></div>
+                <h3>{service.title}</h3>
+                <p>{service.summary}</p>
+                <ArrowRight className="service-arrow" aria-hidden="true" size={19} />
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>

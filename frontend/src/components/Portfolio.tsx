@@ -94,8 +94,8 @@ export function Portfolio() {
             />
           ))}
         </div>
-        <Link className="text-link" href="#contact" data-track="cta_portfolio">
-          Imaginer votre projet <ArrowRight aria-hidden="true" size={18} />
+        <Link className="text-link" href="/realisations" data-track="cta_portfolio">
+          Voir toutes les réalisations <ArrowRight aria-hidden="true" size={18} />
         </Link>
       </div>
     </section>

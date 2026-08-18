@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
-  await page.goto("/#contact");
+  await page.goto("/contact");
   const refuse = page.getByRole("button", { name: "Refuser" });
   if (await refuse.isVisible()) await refuse.click();
 });
