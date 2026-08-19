@@ -551,14 +551,14 @@ em {
   object-fit: contain;
   pointer-events: none;
   mix-blend-mode: screen;
-  filter: brightness(1.72) contrast(1.1) saturate(1.85) drop-shadow(0 0 11px rgba(0, 111, 255, 0.82));
-  -webkit-mask-image: linear-gradient(90deg, transparent 29%, rgba(0, 0, 0, 0.12) 38%, #000 47%, #000 53%, rgba(0, 0, 0, 0.12) 62%, transparent 71%);
-  mask-image: linear-gradient(90deg, transparent 29%, rgba(0, 0, 0, 0.12) 38%, #000 47%, #000 53%, rgba(0, 0, 0, 0.12) 62%, transparent 71%);
+  filter: brightness(0.72) contrast(2.45) saturate(5.5) drop-shadow(0 0 8px rgba(0, 119, 255, 0.92));
+  -webkit-mask-image: linear-gradient(90deg, transparent 39%, rgba(0, 0, 0, 0.16) 45%, #000 49%, #000 51%, rgba(0, 0, 0, 0.16) 55%, transparent 61%);
+  mask-image: linear-gradient(90deg, transparent 39%, rgba(0, 0, 0, 0.16) 45%, #000 49%, #000 51%, rgba(0, 0, 0, 0.16) 55%, transparent 61%);
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  -webkit-mask-size: 230% 100%;
-  mask-size: 230% 100%;
-  animation: hero-rock-energy-sweep 7.2s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+  -webkit-mask-size: 180% 100%;
+  mask-size: 180% 100%;
+  animation: hero-rock-energy-sweep 6.4s linear infinite;
   will-change: opacity, mask-position;
 }
 
@@ -771,22 +771,21 @@ em {
 }
 
 @keyframes hero-rock-energy-sweep {
-  0%, 10% {
+  0%, 8% {
     opacity: 0;
-    -webkit-mask-position: 145% 0;
-    mask-position: 145% 0;
+    -webkit-mask-position: 160% 0;
+    mask-position: 160% 0;
   }
-  18% { opacity: 0.28; }
-  42% { opacity: 0.9; }
-  66% {
-    opacity: 0.52;
-    -webkit-mask-position: -55% 0;
-    mask-position: -55% 0;
+  14% { opacity: 0.82; }
+  68% {
+    opacity: 0.92;
+    -webkit-mask-position: -70% 0;
+    mask-position: -70% 0;
   }
   76%, 100% {
     opacity: 0;
-    -webkit-mask-position: -95% 0;
-    mask-position: -95% 0;
+    -webkit-mask-position: -100% 0;
+    mask-position: -100% 0;
   }
 }
 
@@ -2859,7 +2858,7 @@ em {
   }
 
   .hero-device-energy-image {
-    animation-duration: 8.4s;
+    animation-duration: 7.2s;
   }
 
   .quality-seal {
