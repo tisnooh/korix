@@ -33,9 +33,10 @@ export default function PrivacyPage() {
       <section>
         <h2>Destinataires et durée de conservation</h2>
         <p>
-          Les données sont accessibles uniquement à KORIX et au prestataire technique utilisé pour acheminer le message.
-          Elles sont supprimées au plus tard trois ans après le dernier échange, sauf obligation légale ou relation contractuelle en cours.
-          Elles ne sont ni revendues ni utilisées pour une inscription automatique à une newsletter.
+          Les données sont accessibles à KORIX et transitent par FormSubmit, le prestataire technique chargé d’acheminer le message.
+          FormSubmit indique conserver les soumissions pendant 30 jours. KORIX supprime ensuite les échanges au plus tard trois ans après
+          le dernier contact, sauf obligation légale ou relation contractuelle en cours. Ces informations ne sont ni revendues ni utilisées
+          pour une inscription automatique à une newsletter.
         </p>
       </section>
 
@@ -59,7 +60,7 @@ export default function PrivacyPage() {
         <h2>Sécurité</h2>
         <p>
           Le formulaire applique une validation côté navigateur et côté serveur, une limitation des envois et des contrôles anti-spam.
-          Les secrets nécessaires à l’acheminement des e-mails restent exclusivement côté serveur.
+          L’adresse de destination et la configuration d’acheminement restent exclusivement côté serveur.
         </p>
       </section>
     </article>
