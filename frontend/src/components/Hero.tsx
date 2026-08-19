@@ -49,15 +49,62 @@ export function Hero() {
           sizes="(max-width: 899px) 118vw, min(68vw, 1280px)"
         />
         <div className="hero-device-energy" aria-hidden="true">
-          <Image
-            className="hero-device-energy-image"
-            src="/assets/korix-laptop-rock-transparent-1920.png"
-            alt=""
-            width={1920}
-            height={1080}
-            quality={94}
-            sizes="(max-width: 899px) 118vw, min(68vw, 1280px)"
-          />
+          <svg className="hero-device-energy-map" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <filter id="hero-crack-dim" x="-8%" y="-8%" width="116%" height="116%" colorInterpolationFilters="sRGB">
+                <feColorMatrix
+                  in="SourceGraphic"
+                  type="matrix"
+                  values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -0.9 -0.7 1.5 0 -0.05"
+                  result="crackAlpha"
+                />
+                <feFlood floodColor="#00030a" result="dimColor" />
+                <feComposite in="dimColor" in2="crackAlpha" operator="in" />
+              </filter>
+              <filter id="hero-crack-glow" x="-12%" y="-12%" width="124%" height="124%" colorInterpolationFilters="sRGB">
+                <feColorMatrix
+                  in="SourceGraphic"
+                  type="matrix"
+                  values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -0.9 -0.7 1.5 0 -0.05"
+                  result="crackAlpha"
+                />
+                <feFlood floodColor="#008cff" result="energyColor" />
+                <feComposite in="energyColor" in2="crackAlpha" operator="in" result="energyCore" />
+                <feGaussianBlur in="energyCore" stdDeviation="5" result="energyGlow" />
+                <feMerge>
+                  <feMergeNode in="energyGlow" />
+                  <feMergeNode in="energyCore" />
+                </feMerge>
+              </filter>
+              <linearGradient id="hero-crack-sweep-gradient" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stopColor="black" />
+                <stop offset="0.26" stopColor="black" />
+                <stop offset="0.46" stopColor="#6d6d6d" />
+                <stop offset="0.5" stopColor="white" />
+                <stop offset="0.58" stopColor="#b8b8b8" />
+                <stop offset="0.78" stopColor="#222" />
+                <stop offset="1" stopColor="black" />
+              </linearGradient>
+              <mask className="hero-crack-sweep-mask" id="hero-crack-sweep-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080">
+                <rect className="hero-crack-sweep" x="-900" y="0" width="820" height="1080" fill="url(#hero-crack-sweep-gradient)" />
+              </mask>
+            </defs>
+            <image
+              className="hero-device-crack-dimmer"
+              href="/assets/korix-laptop-rock-transparent-1920.png"
+              width="1920"
+              height="1080"
+              filter="url(#hero-crack-dim)"
+            />
+            <image
+              className="hero-device-energy-image"
+              href="/assets/korix-laptop-rock-transparent-1920.png"
+              width="1920"
+              height="1080"
+              filter="url(#hero-crack-glow)"
+              mask="url(#hero-crack-sweep-mask)"
+            />
+          </svg>
         </div>
       </div>
       <div className="container hero-grid">

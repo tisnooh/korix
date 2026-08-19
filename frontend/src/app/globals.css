@@ -541,25 +541,31 @@ em {
   mask-size: 100% 100%;
 }
 
-.hero-device-energy-image {
-  position: absolute;
-  inset: 0;
+.hero-device-energy-map {
   display: block;
   width: 100%;
   height: auto;
-  opacity: 0;
-  object-fit: contain;
+  overflow: visible;
   pointer-events: none;
+}
+
+.hero-device-crack-dimmer {
+  opacity: 0.88;
+}
+
+.hero-device-energy-image {
   mix-blend-mode: screen;
-  filter: brightness(0.72) contrast(2.45) saturate(5.5) drop-shadow(0 0 8px rgba(0, 119, 255, 0.92));
-  -webkit-mask-image: linear-gradient(90deg, transparent 39%, rgba(0, 0, 0, 0.16) 45%, #000 49%, #000 51%, rgba(0, 0, 0, 0.16) 55%, transparent 61%);
-  mask-image: linear-gradient(90deg, transparent 39%, rgba(0, 0, 0, 0.16) 45%, #000 49%, #000 51%, rgba(0, 0, 0, 0.16) 55%, transparent 61%);
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: 180% 100%;
-  mask-size: 180% 100%;
+}
+
+.hero-crack-sweep-mask {
+  mask-type: luminance;
+}
+
+.hero-crack-sweep {
   animation: hero-rock-energy-sweep 6.4s linear infinite;
-  will-change: opacity, mask-position;
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: opacity, transform;
 }
 
 .hero-transition {
@@ -773,19 +779,16 @@ em {
 @keyframes hero-rock-energy-sweep {
   0%, 8% {
     opacity: 0;
-    -webkit-mask-position: 160% 0;
-    mask-position: 160% 0;
+    transform: translateX(0);
   }
   14% { opacity: 0.82; }
   68% {
-    opacity: 0.92;
-    -webkit-mask-position: -70% 0;
-    mask-position: -70% 0;
+    opacity: 1;
+    transform: translateX(3000px);
   }
   76%, 100% {
     opacity: 0;
-    -webkit-mask-position: -100% 0;
-    mask-position: -100% 0;
+    transform: translateX(3200px);
   }
 }
 
@@ -2857,7 +2860,7 @@ em {
     mask-image: linear-gradient(to bottom, #000 0%, #000 91%, rgba(0, 0, 0, 0.94) 94%, rgba(0, 0, 0, 0.7) 97%, rgba(0, 0, 0, 0.3) 99%, transparent 100%);
   }
 
-  .hero-device-energy-image {
+  .hero-crack-sweep {
     animation-duration: 7.2s;
   }
 
@@ -3322,12 +3325,12 @@ em {
   .hero-planet,
   .hero-device-stage,
   .hero-device-stage::after,
-  .hero-device-energy-image {
+  .hero-crack-sweep {
     animation: none !important;
   }
 
-  .hero-device-energy-image {
-    opacity: 0 !important;
+  .hero-device-energy {
+    display: none;
   }
 
   .process-steps::after {
