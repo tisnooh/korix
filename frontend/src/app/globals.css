@@ -492,6 +492,12 @@ em {
   object-fit: contain;
   pointer-events: none;
   filter: drop-shadow(0 34px 46px rgba(0, 0, 0, 0.48));
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 78%, rgba(0, 0, 0, 0.92) 86%, rgba(0, 0, 0, 0.48) 94%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 78%, rgba(0, 0, 0, 0.92) 86%, rgba(0, 0, 0, 0.48) 94%, transparent 100%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
   transform: translate3d(var(--hero-device-x, 0), var(--hero-device-y, 0), 0);
   transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -2747,6 +2753,8 @@ em {
     right: -8vw;
     bottom: 168px;
     width: 118vw;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 68%, rgba(0, 0, 0, 0.9) 78%, rgba(0, 0, 0, 0.42) 91%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 68%, rgba(0, 0, 0, 0.9) 78%, rgba(0, 0, 0, 0.42) 91%, transparent 100%);
   }
 
   .quality-seal {
