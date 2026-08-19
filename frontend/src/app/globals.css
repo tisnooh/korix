@@ -2735,15 +2735,18 @@ em {
   }
 
   .hero-planet {
-    right: -58vw;
-    bottom: 70px;
-    width: 140vw;
+    right: -30vw;
+    bottom: 110px;
+    width: 100vw;
+    opacity: 0.58;
+    filter: brightness(0.64) saturate(1.05) drop-shadow(0 0 20px rgba(0, 102, 255, 0.14));
+    animation: none;
   }
 
   .hero-device {
-    right: -2vw;
-    bottom: 172px;
-    width: 104vw;
+    right: -8vw;
+    bottom: 168px;
+    width: 118vw;
   }
 
   .quality-seal {
