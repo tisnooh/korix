@@ -50,8 +50,6 @@ export function Portfolio() {
     const handleVisibility = () => (document.hidden ? stop() : start());
     const handleMotionPreference = () => (reducedMotion.matches ? stop() : start());
 
-    section.addEventListener("mouseenter", stop);
-    section.addEventListener("mouseleave", start);
     section.addEventListener("focusin", stop);
     section.addEventListener("focusout", handleFocusOut);
     document.addEventListener("visibilitychange", handleVisibility);
@@ -60,8 +58,6 @@ export function Portfolio() {
 
     return () => {
       stop();
-      section.removeEventListener("mouseenter", stop);
-      section.removeEventListener("mouseleave", start);
       section.removeEventListener("focusin", stop);
       section.removeEventListener("focusout", handleFocusOut);
       document.removeEventListener("visibilitychange", handleVisibility);

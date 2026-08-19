@@ -452,7 +452,7 @@ em {
   object-position: center;
   pointer-events: none;
   transform: scale(1.025);
-  animation: hero-space-drift 34s ease-in-out infinite alternate;
+  animation: hero-space-drift 22s ease-in-out infinite alternate;
   will-change: transform;
 }
 
@@ -468,7 +468,7 @@ em {
   opacity: 0.84;
   filter: brightness(0.76) saturate(1.12) drop-shadow(0 0 28px rgba(0, 102, 255, 0.2));
   transform-origin: 50% 50%;
-  animation: hero-planet-spin 140s linear infinite;
+  animation: hero-planet-spin 72s linear infinite;
   will-change: transform;
 }
 
@@ -482,12 +482,38 @@ em {
     linear-gradient(180deg, rgba(3, 3, 3, 0.76) 0%, transparent 17%, transparent 78%, rgba(3, 3, 3, 0.72) 93%, #030303 100%);
 }
 
-.hero-device {
+.hero-device-stage {
   position: absolute;
   z-index: 2;
   right: 0;
   bottom: 0;
   width: min(68vw, 1280px);
+  pointer-events: none;
+  isolation: isolate;
+  animation: hero-device-float 6.4s ease-in-out infinite;
+  will-change: transform;
+}
+
+.hero-device-stage::after {
+  position: absolute;
+  z-index: -1;
+  right: 4%;
+  bottom: 3%;
+  left: 14%;
+  height: 24%;
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+  background: radial-gradient(ellipse, rgba(0, 91, 255, 0.3), rgba(0, 47, 160, 0.08) 48%, transparent 72%);
+  filter: blur(24px);
+  animation: hero-energy-pulse 4.8s ease-in-out infinite alternate;
+}
+
+.hero-device {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
   height: auto;
   object-fit: contain;
   pointer-events: none;
@@ -691,11 +717,23 @@ em {
 
 @keyframes hero-space-drift {
   from { transform: scale(1.025) translate3d(0, 0, 0); }
-  to { transform: scale(1.055) translate3d(-0.7%, -0.45%, 0); }
+  to { transform: scale(1.06) translate3d(-1.1%, -0.7%, 0); }
 }
 
 @keyframes hero-planet-spin {
-  to { transform: rotate(360deg); }
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.012); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes hero-device-float {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -5px, 0); }
+}
+
+@keyframes hero-energy-pulse {
+  from { opacity: 0.45; transform: scaleX(0.94); }
+  to { opacity: 0.9; transform: scaleX(1.04); }
 }
 
 @keyframes spin {
@@ -2318,7 +2356,7 @@ em {
     font-size: clamp(52px, 5vw, 60px);
   }
 
-  .hero-device {
+  .hero-device-stage {
     width: min(70vw, 1040px);
   }
 
@@ -2442,7 +2480,7 @@ em {
     bottom: -5vw;
     width: 118vw;
     opacity: 0.76;
-    animation-duration: 180s;
+    animation-duration: 92s;
   }
 
   .hero-overlay {
@@ -2451,7 +2489,7 @@ em {
       linear-gradient(90deg, rgba(3, 3, 3, 0.48), transparent 22%, transparent 80%, rgba(3, 3, 3, 0.22));
   }
 
-  .hero-device {
+  .hero-device-stage {
     right: 1vw;
     bottom: 110px;
     width: min(75vw, 650px);
@@ -2746,13 +2784,17 @@ em {
     width: 100vw;
     opacity: 0.58;
     filter: brightness(0.64) saturate(1.05) drop-shadow(0 0 20px rgba(0, 102, 255, 0.14));
-    animation: none;
+    animation-duration: 105s;
   }
 
-  .hero-device {
+  .hero-device-stage {
     right: -8vw;
     bottom: 168px;
     width: 118vw;
+    animation-duration: 7.4s;
+  }
+
+  .hero-device {
     -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 81%, rgba(0, 0, 0, 0.92) 87%, rgba(0, 0, 0, 0.68) 93%, rgba(0, 0, 0, 0.32) 97%, transparent 100%);
     mask-image: linear-gradient(to bottom, #000 0%, #000 81%, rgba(0, 0, 0, 0.92) 87%, rgba(0, 0, 0, 0.68) 93%, rgba(0, 0, 0, 0.32) 97%, transparent 100%);
   }
@@ -3165,7 +3207,7 @@ em {
 }
 
 @media (max-width: 400px) {
-  .hero-device {
+  .hero-device-stage {
     bottom: 196px;
   }
 }
@@ -3208,12 +3250,15 @@ em {
     transition-duration: 0.01ms !important;
   }
 
-  .hero-device {
+  .hero-device,
+  .hero-device-stage {
     transform: none !important;
   }
 
   .hero-background,
-  .hero-planet {
+  .hero-planet,
+  .hero-device-stage,
+  .hero-device-stage::after {
     animation: none !important;
   }
 

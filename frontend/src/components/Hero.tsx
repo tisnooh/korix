@@ -65,16 +65,18 @@ export function Hero() {
         sizes="(max-width: 899px) 140vw, min(76vw, 1450px)"
       />
       <div className="hero-overlay" aria-hidden="true" />
-      <Image
-        className="hero-device"
-        src="/assets/korix-laptop-rock-transparent-1920.png"
-        alt="Ordinateur KORIX présentant une sélection de créations de sites, posé sur une roche éclairée en bleu"
-        width={1920}
-        height={1080}
-        priority
-        quality={94}
-        sizes="(max-width: 899px) 110vw, min(68vw, 1280px)"
-      />
+      <div className="hero-device-stage">
+        <Image
+          className="hero-device"
+          src="/assets/korix-laptop-rock-transparent-1920.png"
+          alt="Ordinateur KORIX présentant une sélection de créations de sites, posé sur une roche éclairée en bleu"
+          width={1920}
+          height={1080}
+          priority
+          quality={94}
+          sizes="(max-width: 899px) 118vw, min(68vw, 1280px)"
+        />
+      </div>
       <div className="container hero-grid">
         <div className="hero-copy">
           <p className="eyebrow"><span /> Création de sites internet</p>
