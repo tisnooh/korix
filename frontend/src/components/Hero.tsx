@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { PointerEvent, useRef } from "react";
 import { ArrowRight, Gauge, KeyRound, ShieldCheck } from "lucide-react";
 
 const promises = [
@@ -12,38 +11,11 @@ const promises = [
 ] as const;
 
 export function Hero() {
-  const heroRef = useRef<HTMLElement>(null);
-  const frameRef = useRef<number | null>(null);
-
-  const updateDeviceDepth = (event: PointerEvent<HTMLElement>) => {
-    if (!window.matchMedia("(min-width: 900px) and (pointer: fine)").matches || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const hero = heroRef.current;
-    if (!hero) return;
-    const bounds = hero.getBoundingClientRect();
-    const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 12;
-    const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 8;
-    if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
-    frameRef.current = requestAnimationFrame(() => {
-      hero.style.setProperty("--hero-device-x", `${x.toFixed(2)}px`);
-      hero.style.setProperty("--hero-device-y", `${y.toFixed(2)}px`);
-    });
-  };
-
-  const resetDeviceDepth = () => {
-    const hero = heroRef.current;
-    if (!hero) return;
-    hero.style.setProperty("--hero-device-x", "0px");
-    hero.style.setProperty("--hero-device-y", "0px");
-  };
-
   return (
     <section
-      ref={heroRef}
       className="hero"
       id="top"
       aria-labelledby="hero-title"
-      onPointerMove={updateDeviceDepth}
-      onPointerLeave={resetDeviceDepth}
     >
       <Image
         className="hero-background"
@@ -76,6 +48,17 @@ export function Hero() {
           quality={94}
           sizes="(max-width: 899px) 118vw, min(68vw, 1280px)"
         />
+        <div className="hero-device-energy" aria-hidden="true">
+          <Image
+            className="hero-device-energy-image"
+            src="/assets/korix-laptop-rock-transparent-1920.png"
+            alt=""
+            width={1920}
+            height={1080}
+            quality={94}
+            sizes="(max-width: 899px) 118vw, min(68vw, 1280px)"
+          />
+        </div>
       </div>
       <div className="container hero-grid">
         <div className="hero-copy">
