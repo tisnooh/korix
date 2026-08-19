@@ -451,6 +451,25 @@ em {
   object-fit: cover;
   object-position: center;
   pointer-events: none;
+  transform: scale(1.025);
+  animation: hero-space-drift 34s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.hero-planet {
+  position: absolute;
+  z-index: 0;
+  top: 42%;
+  right: clamp(-230px, -7vw, -96px);
+  width: min(76vw, 1450px);
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
+  opacity: 0.84;
+  filter: brightness(0.76) saturate(1.12) drop-shadow(0 0 28px rgba(0, 102, 255, 0.2));
+  transform-origin: 50% 50%;
+  animation: hero-planet-spin 140s linear infinite;
+  will-change: transform;
 }
 
 .hero-overlay {
@@ -662,6 +681,15 @@ em {
 
 @keyframes hero-enter {
   from { opacity: 0; transform: translateY(24px); }
+}
+
+@keyframes hero-space-drift {
+  from { transform: scale(1.025) translate3d(0, 0, 0); }
+  to { transform: scale(1.055) translate3d(-0.7%, -0.45%, 0); }
+}
+
+@keyframes hero-planet-spin {
+  to { transform: rotate(360deg); }
 }
 
 @keyframes spin {
@@ -1150,6 +1178,19 @@ em {
   font-weight: 750;
   opacity: 0;
   transform: scale(0.72);
+  transition: transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1), border-color 260ms ease,
+    background-color 260ms ease, box-shadow 260ms ease;
+}
+
+.process-node::after {
+  position: absolute;
+  inset: -7px;
+  border: 1px solid rgba(31, 117, 255, 0.48);
+  border-radius: inherit;
+  content: "";
+  opacity: 0;
+  transform: scale(0.78);
+  transition: opacity 260ms ease, transform 360ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .process-steps:not(.is-visible) .process-node {
@@ -1159,19 +1200,47 @@ em {
 }
 
 .process-steps.is-visible .process-node {
-  animation: process-node-reveal 620ms cubic-bezier(0.2, 0.9, 0.25, 1.2) both;
+  opacity: 1;
+  transform: scale(1);
+  animation: process-node-reveal 620ms cubic-bezier(0.2, 0.9, 0.25, 1.2) backwards;
   animation-delay: var(--process-delay);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .process-steps.is-visible li:hover .process-node {
+    border-color: #4b91ff;
+    background: #071b43;
+    box-shadow: 0 0 42px rgba(0, 105, 255, 0.72), inset 0 0 20px rgba(0, 105, 255, 0.28);
+    transform: translateY(-5px) scale(1.08);
+  }
+
+  .process-steps.is-visible li:hover .process-node::after {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .process-steps.is-visible li:hover h3 {
+    color: #72a8ff;
+    transform: translateY(-2px);
+  }
+
+  .process-steps.is-visible li:hover p {
+    color: rgba(233, 240, 255, 0.82);
+  }
 }
 
 .process-steps h3,
 .process-steps p {
   opacity: 0;
   transform: translateY(10px);
+  transition: color 240ms ease, transform 240ms ease;
 }
 
 .process-steps.is-visible h3,
 .process-steps.is-visible p {
-  animation: process-copy-reveal 480ms ease-out both;
+  opacity: 1;
+  transform: translateY(0);
+  animation: process-copy-reveal 480ms ease-out backwards;
   animation-delay: calc(var(--process-delay) + 170ms);
 }
 
@@ -2361,6 +2430,15 @@ em {
     object-position: 68% center;
   }
 
+  .hero-planet {
+    top: auto;
+    right: -42vw;
+    bottom: -5vw;
+    width: 118vw;
+    opacity: 0.76;
+    animation-duration: 180s;
+  }
+
   .hero-overlay {
     background:
       linear-gradient(180deg, #030303 0%, rgba(3, 3, 3, 0.96) 35%, rgba(3, 3, 3, 0.72) 48%, rgba(3, 3, 3, 0.16) 63%, transparent 74%, rgba(3, 3, 3, 0.74) 92%, #030303 100%),
@@ -2654,6 +2732,12 @@ em {
 
   .hero-background {
     object-position: 72% center;
+  }
+
+  .hero-planet {
+    right: -58vw;
+    bottom: 70px;
+    width: 140vw;
   }
 
   .hero-device {
@@ -3115,6 +3199,11 @@ em {
 
   .hero-device {
     transform: none !important;
+  }
+
+  .hero-background,
+  .hero-planet {
+    animation: none !important;
   }
 
   .process-steps::after {

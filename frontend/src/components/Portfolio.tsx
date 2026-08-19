@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
@@ -10,6 +10,7 @@ import { projects } from "@/lib/projects";
 export function Portfolio() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ align: "center", loop: true, skipSnaps: false });
   const [selected, setSelected] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
 
   const updateSelected = useCallback(() => {
     if (emblaApi) setSelected(emblaApi.selectedScrollSnap());
@@ -25,8 +26,51 @@ export function Portfolio() {
     };
   }, [emblaApi, updateSelected]);
 
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!emblaApi || !section) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let timer: number | undefined;
+
+    const stop = () => {
+      if (timer !== undefined) window.clearInterval(timer);
+      timer = undefined;
+    };
+
+    const start = () => {
+      stop();
+      if (reducedMotion.matches || document.hidden) return;
+      timer = window.setInterval(() => emblaApi.scrollNext(), 5200);
+    };
+
+    const handleFocusOut = (event: FocusEvent) => {
+      if (!section.contains(event.relatedTarget as Node | null)) start();
+    };
+    const handleVisibility = () => (document.hidden ? stop() : start());
+    const handleMotionPreference = () => (reducedMotion.matches ? stop() : start());
+
+    section.addEventListener("mouseenter", stop);
+    section.addEventListener("mouseleave", start);
+    section.addEventListener("focusin", stop);
+    section.addEventListener("focusout", handleFocusOut);
+    document.addEventListener("visibilitychange", handleVisibility);
+    reducedMotion.addEventListener("change", handleMotionPreference);
+    start();
+
+    return () => {
+      stop();
+      section.removeEventListener("mouseenter", stop);
+      section.removeEventListener("mouseleave", start);
+      section.removeEventListener("focusin", stop);
+      section.removeEventListener("focusout", handleFocusOut);
+      document.removeEventListener("visibilitychange", handleVisibility);
+      reducedMotion.removeEventListener("change", handleMotionPreference);
+    };
+  }, [emblaApi]);
+
   return (
-    <section className="section section--border portfolio-section" id="realisations" aria-labelledby="portfolio-title">
+    <section ref={sectionRef} className="section section--border portfolio-section" id="realisations" aria-labelledby="portfolio-title">
       <div className="container portfolio-heading">
         <div className="section-intro">
           <p className="eyebrow"><span /> Nos réalisations</p>

@@ -47,12 +47,22 @@ export function Hero() {
     >
       <Image
         className="hero-background"
-        src="/assets/korix-hero-space-background-1920.webp"
+        src="/assets/korix-hero-space-clean.png"
         alt=""
         fill
         priority
-        quality={90}
+        quality={84}
         sizes="100vw"
+      />
+      <Image
+        className="hero-planet"
+        src="/assets/korix-hero-planet-transparent.png"
+        alt=""
+        width={1302}
+        height={1208}
+        priority
+        quality={86}
+        sizes="(max-width: 899px) 140vw, min(76vw, 1450px)"
       />
       <div className="hero-overlay" aria-hidden="true" />
       <Image
