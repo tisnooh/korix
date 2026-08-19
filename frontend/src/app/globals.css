@@ -2753,8 +2753,8 @@ em {
     right: -8vw;
     bottom: 168px;
     width: 118vw;
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 68%, rgba(0, 0, 0, 0.9) 78%, rgba(0, 0, 0, 0.42) 91%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 68%, rgba(0, 0, 0, 0.9) 78%, rgba(0, 0, 0, 0.42) 91%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 81%, rgba(0, 0, 0, 0.92) 87%, rgba(0, 0, 0, 0.68) 93%, rgba(0, 0, 0, 0.32) 97%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 81%, rgba(0, 0, 0, 0.92) 87%, rgba(0, 0, 0, 0.68) 93%, rgba(0, 0, 0, 0.32) 97%, transparent 100%);
   }
 
   .quality-seal {
