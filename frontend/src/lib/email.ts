@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import type { ContactPayload } from "@/lib/contact";
+import { siteConfig } from "@/lib/site-config";
 
 const escapeHtml = (value: string) =>
   value
@@ -67,6 +68,7 @@ export async function sendContactLead(data: ContactPayload) {
     </div>`;
 
   if (mode === "formsubmit") {
+    const siteOrigin = new URL(siteConfig.url).origin;
     const form = new URLSearchParams({
       name: data.name,
       company: data.company,
@@ -85,6 +87,8 @@ export async function sendContactLead(data: ContactPayload) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/x-www-form-urlencoded",
+        Origin: siteOrigin,
+        Referer: `${siteOrigin}/contact`,
       },
       body: form,
       signal: AbortSignal.timeout(15_000),
