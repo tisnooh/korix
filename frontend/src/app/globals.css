@@ -2834,7 +2834,7 @@ em {
 
   .hero-planet {
     right: -30vw;
-    bottom: 160px;
+    bottom: 300px;
     width: 100vw;
     opacity: 0.58;
     filter: brightness(0.64) saturate(1.05) drop-shadow(0 0 20px rgba(0, 102, 255, 0.14));
