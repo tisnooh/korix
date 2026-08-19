@@ -2856,13 +2856,13 @@ em {
   }
 
   .hero-device {
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 91%, rgba(0, 0, 0, 0.94) 94%, rgba(0, 0, 0, 0.7) 97%, rgba(0, 0, 0, 0.3) 99%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 91%, rgba(0, 0, 0, 0.94) 94%, rgba(0, 0, 0, 0.7) 97%, rgba(0, 0, 0, 0.3) 99%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 80%, rgba(0, 0, 0, 0.99) 84%, rgba(0, 0, 0, 0.96) 88%, rgba(0, 0, 0, 0.88) 92%, rgba(0, 0, 0, 0.7) 95%, rgba(0, 0, 0, 0.48) 97%, rgba(0, 0, 0, 0.22) 99%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 80%, rgba(0, 0, 0, 0.99) 84%, rgba(0, 0, 0, 0.96) 88%, rgba(0, 0, 0, 0.88) 92%, rgba(0, 0, 0, 0.7) 95%, rgba(0, 0, 0, 0.48) 97%, rgba(0, 0, 0, 0.22) 99%, transparent 100%);
   }
 
   .hero-device-energy {
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 91%, rgba(0, 0, 0, 0.94) 94%, rgba(0, 0, 0, 0.7) 97%, rgba(0, 0, 0, 0.3) 99%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 0%, #000 91%, rgba(0, 0, 0, 0.94) 94%, rgba(0, 0, 0, 0.7) 97%, rgba(0, 0, 0, 0.3) 99%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 80%, rgba(0, 0, 0, 0.99) 84%, rgba(0, 0, 0, 0.96) 88%, rgba(0, 0, 0, 0.88) 92%, rgba(0, 0, 0, 0.7) 95%, rgba(0, 0, 0, 0.48) 97%, rgba(0, 0, 0, 0.22) 99%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 80%, rgba(0, 0, 0, 0.99) 84%, rgba(0, 0, 0, 0.96) 88%, rgba(0, 0, 0, 0.88) 92%, rgba(0, 0, 0, 0.7) 95%, rgba(0, 0, 0, 0.48) 97%, rgba(0, 0, 0, 0.22) 99%, transparent 100%);
   }
 
   .hero-device-crack-flow::before {
