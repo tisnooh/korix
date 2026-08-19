@@ -9,7 +9,7 @@ function addOrigin(origins: Set<string>, candidate: string | null | undefined) {
 
 export function isAllowedRequestOrigin(request: Request, configuredUrl = process.env.NEXT_PUBLIC_SITE_URL) {
   const origin = request.headers.get("origin");
-  if (!origin) return true;
+  if (!origin) return false;
 
   const requestUrl = new URL(request.url);
   const allowedOrigins = new Set<string>([requestUrl.origin]);

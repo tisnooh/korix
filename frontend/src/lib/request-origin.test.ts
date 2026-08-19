@@ -27,6 +27,11 @@ describe("isAllowedRequestOrigin", () => {
     expect(isAllowedRequestOrigin(request)).toBe(false);
   });
 
+  it("refuse une requête sans origine déclarée", () => {
+    const request = new Request("https://korix.fr/api/contact");
+    expect(isAllowedRequestOrigin(request)).toBe(false);
+  });
+
   it("n’échoue pas avec une URL optionnelle invalide", () => {
     const request = new Request("https://korix.fr/api/contact", {
       headers: { origin: "https://korix.fr" },

@@ -18,6 +18,9 @@ const nextConfig = {
       { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
       { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=()" },
       { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
+      { key: "Cross-Origin-Resource-Policy", value: "same-origin" },
+      { key: "X-DNS-Prefetch-Control", value: "off" },
+      { key: "X-Permitted-Cross-Domain-Policies", value: "none" },
       {
         key: "Content-Security-Policy",
         value: [
@@ -26,7 +29,11 @@ const nextConfig = {
           "style-src 'self' 'unsafe-inline'",
           "img-src 'self' data: blob:",
           "font-src 'self' data:",
-          "connect-src 'self' https://eu.i.posthog.com https://eu-assets.i.posthog.com",
+          "connect-src 'self' https://formsubmit.co https://eu.i.posthog.com https://eu-assets.i.posthog.com",
+          "frame-src 'none'",
+          "media-src 'self'",
+          "manifest-src 'self'",
+          "worker-src 'self' blob:",
           "frame-ancestors 'none'",
           "base-uri 'self'",
           "form-action 'self'",

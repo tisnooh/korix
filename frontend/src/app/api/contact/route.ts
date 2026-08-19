@@ -5,6 +5,14 @@ import { checkRateLimit } from "@/lib/rate-limit";
 import { isAllowedRequestOrigin } from "@/lib/request-origin";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+function json(body: unknown, status = 200, headers?: Record<string, string>) {
+  return NextResponse.json(body, {
+    status,
+    headers: { "Cache-Control": "no-store", ...headers },
+  });
+}
 
 function getClientIp(request: Request) {
   return (
@@ -15,56 +23,64 @@ function getClientIp(request: Request) {
 }
 
 export async function POST(request: Request) {
+  if (process.env.CONTACT_API_ENABLED !== "true") {
+    return json({ message: "Ressource introuvable." }, 404);
+  }
+
   if (!isAllowedRequestOrigin(request)) {
-    return NextResponse.json({ message: "Origine de la demande refusée." }, { status: 403 });
+    return json({ message: "Origine de la demande refusée." }, 403);
+  }
+
+  const contentType = request.headers.get("content-type") || "";
+  if (!contentType.toLowerCase().startsWith("application/json")) {
+    return json({ message: "Format de requête non pris en charge." }, 415);
   }
 
   const contentLength = Number(request.headers.get("content-length") || 0);
   if (contentLength > 25_000) {
-    return NextResponse.json({ message: "La demande est trop volumineuse." }, { status: 413 });
+    return json({ message: "La demande est trop volumineuse." }, 413);
   }
 
   const limit = checkRateLimit(getClientIp(request));
   if (!limit.allowed) {
-    return NextResponse.json(
+    return json(
       { message: "Trop de demandes ont été envoyées. Réessayez dans quelques minutes." },
-      { status: 429, headers: { "Retry-After": String(limit.retryAfter) } },
+      429,
+      { "Retry-After": String(limit.retryAfter) },
     );
   }
 
   let body: unknown;
   try {
-    body = await request.json();
+    const rawBody = await request.text();
+    if (new TextEncoder().encode(rawBody).byteLength > 25_000) {
+      return json({ message: "La demande est trop volumineuse." }, 413);
+    }
+    body = JSON.parse(rawBody);
   } catch {
-    return NextResponse.json({ message: "Le formulaire transmis est invalide." }, { status: 400 });
+    return json({ message: "Le formulaire transmis est invalide." }, 400);
   }
 
   const result = validateContactPayload(body);
   if (!result.valid) {
-    return NextResponse.json(
-      { message: "Certains champs nécessitent votre attention.", errors: result.errors },
-      { status: 422 },
-    );
+    return json({ message: "Certains champs nécessitent votre attention.", errors: result.errors }, 422);
   }
 
   // Honeypot: return a neutral success response without sending anything.
   if (result.data.website) {
-    return NextResponse.json({ message: "Votre demande a bien été reçue." });
+    return json({ message: "Votre demande a bien été reçue." });
   }
 
   // A real visitor cannot complete this form in under three seconds.
   if (!result.data.startedAt || Date.now() - result.data.startedAt < 3_000) {
-    return NextResponse.json({ message: "La demande a été envoyée trop rapidement." }, { status: 400 });
+    return json({ message: "La demande a été envoyée trop rapidement." }, 400);
   }
 
   try {
     const delivery = await sendContactLead(result.data);
-    return NextResponse.json({ message: "Votre demande a bien été envoyée.", id: delivery.id });
+    return json({ message: "Votre demande a bien été envoyée.", id: delivery.id });
   } catch (error) {
     console.error("[KORIX contact] delivery failed", error);
-    return NextResponse.json(
-      { message: "L’envoi n’a pas abouti. Réessayez dans quelques instants." },
-      { status: 503 },
-    );
+    return json({ message: "L’envoi n’a pas abouti. Réessayez dans quelques instants." }, 503);
   }
 }

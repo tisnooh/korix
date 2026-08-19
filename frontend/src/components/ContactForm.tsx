@@ -95,6 +95,7 @@ export function ContactForm() {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         body: formSubmitPayload,
+        signal: AbortSignal.timeout(15_000),
       });
       const result = (await response.json().catch(() => ({}))) as {
         message?: string;

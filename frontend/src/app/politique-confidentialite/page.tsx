@@ -12,7 +12,7 @@ export default function PrivacyPage() {
     <article className="legal-page container">
       <p className="eyebrow"><span /> Vos données</p>
       <h1>Politique de confidentialité</h1>
-      <p className="legal-updated">Dernière mise à jour : 15 juillet 2026.</p>
+      <p className="legal-updated">Dernière mise à jour : 19 août 2026.</p>
 
       <section>
         <h2>Données collectées</h2>
@@ -59,8 +59,8 @@ export default function PrivacyPage() {
       <section>
         <h2>Sécurité</h2>
         <p>
-          Le formulaire applique une validation côté navigateur et côté serveur, une limitation des envois et des contrôles anti-spam.
-          L’adresse de destination et la configuration d’acheminement restent exclusivement côté serveur.
+          Le formulaire applique une validation dans le navigateur, un champ-piège anti-spam, un délai minimal de saisie et un blocage des doubles envois.
+          Les données sont transmises directement à FormSubmit par une connexion chiffrée. L’adresse de contact utilisée pour l’acheminement est une information publique ; aucun mot de passe ni secret technique n’est envoyé au navigateur.
         </p>
       </section>
     </article>
