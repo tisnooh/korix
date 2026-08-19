@@ -16,6 +16,9 @@ type Status = "idle" | "sending" | "success" | "error";
 
 class SubmissionError extends Error {}
 
+const contactRecipient = process.env.NEXT_PUBLIC_CONTACT_EMAIL || "korixagency@gmail.com";
+const formSubmitEndpoint = `https://formsubmit.co/ajax/${encodeURIComponent(contactRecipient)}`;
+
 export function ContactForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const successRef = useRef<HTMLDivElement>(null);
@@ -71,18 +74,34 @@ export function ContactForm() {
     submittingRef.current = true;
     setStatus("sending");
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(validation.data),
+      const formSubmitPayload = new URLSearchParams({
+        name: validation.data.name,
+        company: validation.data.company,
+        email: validation.data.email,
+        phone: validation.data.phone || "Non renseigné",
+        projectType: validation.data.projectType,
+        budget: validation.data.budget,
+        timeline: validation.data.timeline,
+        description: validation.data.description,
+        _subject: `Nouvelle demande KORIX — ${validation.data.projectType}`,
+        _template: "table",
+        _captcha: "false",
+        _honey: validation.data.website,
       });
-      const result = (await response.json().catch(() => ({}))) as { message?: string; errors?: ContactErrors };
+      const response = await fetch(formSubmitEndpoint, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: formSubmitPayload,
+      });
+      const result = (await response.json().catch(() => ({}))) as {
+        message?: string;
+        success?: boolean | string;
+      };
 
-      if (!response.ok) {
-        if (result.errors) {
-          setErrors(result.errors);
-          focusFirstError(result.errors);
-        }
+      if (!response.ok || result.success === false || result.success === "false") {
         throw new SubmissionError(result.message || "L’envoi n’a pas abouti. Réessayez dans quelques instants.");
       }
 
