@@ -63,7 +63,7 @@ export function Header() {
   return (
     <header className="site-header" data-testid="site-header">
       <div className="container header-inner">
-        <Brand />
+        <Brand variant="header" />
         <nav className="desktop-nav" aria-label="Navigation principale">
           {navigation.map((item) => (
             <Link key={item.href} href={item.href}>
@@ -104,7 +104,7 @@ export function Header() {
         <button className="menu-backdrop" aria-label="Fermer le menu" onClick={() => closeMenu()} />
         <div ref={panelRef} className="menu-panel" id="site-menu" role="dialog" aria-modal="true" aria-label="Menu principal">
           <div className="menu-panel-head">
-            <Brand compact />
+            <Brand variant="menu" />
             <button
               ref={closeButtonRef}
               className="menu-trigger"

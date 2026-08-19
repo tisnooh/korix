@@ -170,33 +170,27 @@ em {
 
 .brand {
   display: inline-flex;
+  flex: 0 0 auto;
   align-items: center;
   min-height: 44px;
-  font-size: 25px;
-  font-weight: 750;
-  letter-spacing: 0.09em;
+  line-height: 0;
 }
 
-.brand span {
-  position: relative;
-  color: var(--blue-light);
-  text-shadow: 0 0 18px var(--glow);
+.brand-logo {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
 }
 
-.brand span::after {
-  position: absolute;
-  top: 3px;
-  right: -3px;
-  width: 5px;
-  height: 5px;
-  content: "";
-  background: var(--cyan);
-  transform: rotate(45deg);
-  box-shadow: 0 0 10px var(--cyan);
+.brand--header .brand-logo,
+.brand--menu .brand-logo {
+  height: 52px;
 }
 
-.brand--compact {
-  font-size: 20px;
+.brand--footer .brand-logo {
+  height: 64px;
 }
 
 .desktop-nav {
@@ -2399,8 +2393,13 @@ em {
     padding-top: env(safe-area-inset-top, 0px);
   }
 
-  .brand {
-    font-size: 21px;
+  .brand--header .brand-logo,
+  .brand--menu .brand-logo {
+    height: 48px;
+  }
+
+  .brand--footer .brand-logo {
+    height: 60px;
   }
 
   .menu-trigger {

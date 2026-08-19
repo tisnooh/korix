@@ -10,7 +10,7 @@ export function Footer() {
     <footer className="site-footer">
       <div className="container footer-grid">
         <div className="footer-brand">
-          <Brand />
+          <Brand variant="footer" />
           <p>Des sites internet clairs, rapides et adaptés aux besoins des entreprises.</p>
           <span>© {new Date().getFullYear()} KORIX. Tous droits réservés.</span>
         </div>
