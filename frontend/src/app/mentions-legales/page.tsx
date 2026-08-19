@@ -14,13 +14,13 @@ export default function LegalPage() {
     <article className="legal-page container">
       <p className="eyebrow"><span /> Informations</p>
       <h1>Mentions légales</h1>
-      <p className="legal-updated">Dernière mise à jour : 15 juillet 2026.</p>
+      <p className="legal-updated">Dernière mise à jour : 19 août 2026.</p>
 
       <section>
         <h2>Éditeur du site</h2>
-        <p>Le présent site est édité sous le nom <strong>{legal.name}</strong>.</p>
+        <p>Le présent site consacré au projet KORIX est édité par <strong>{legal.name}</strong>.</p>
         <dl>
-          {legal.form ? <><dt>Forme juridique</dt><dd>{legal.form}</dd></> : null}
+          {legal.form ? <><dt>Statut</dt><dd>{legal.form}</dd></> : null}
           {legal.address ? <><dt>Adresse</dt><dd>{legal.address}</dd></> : null}
           {legal.registration ? <><dt>Immatriculation</dt><dd>{legal.registration}</dd></> : null}
           {legal.publicationDirector ? <><dt>Direction de la publication</dt><dd>{legal.publicationDirector}</dd></> : null}
