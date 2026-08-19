@@ -186,11 +186,11 @@ em {
 
 .brand--header .brand-logo,
 .brand--menu .brand-logo {
-  height: 36px;
+  height: 32px;
 }
 
 .brand--footer .brand-logo {
-  height: 44px;
+  height: 40px;
 }
 
 .desktop-nav {
@@ -2395,11 +2395,11 @@ em {
 
   .brand--header .brand-logo,
   .brand--menu .brand-logo {
-    height: 34px;
+    height: 28px;
   }
 
   .brand--footer .brand-logo {
-    height: 40px;
+    height: 34px;
   }
 
   .menu-trigger {
