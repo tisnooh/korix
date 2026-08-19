@@ -89,6 +89,7 @@ export async function sendContactLead(data: ContactPayload) {
         "Content-Type": "application/x-www-form-urlencoded",
         Origin: siteOrigin,
         Referer: `${siteOrigin}/contact`,
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/140 Safari/537.36",
       },
       body: form,
       signal: AbortSignal.timeout(15_000),
