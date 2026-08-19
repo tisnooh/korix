@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { PointerEvent, useRef } from "react";
 import { ArrowRight, Gauge, KeyRound, ShieldCheck } from "lucide-react";
 
 const promises = [
@@ -9,8 +12,39 @@ const promises = [
 ] as const;
 
 export function Hero() {
+  const heroRef = useRef<HTMLElement>(null);
+  const frameRef = useRef<number | null>(null);
+
+  const updateDeviceDepth = (event: PointerEvent<HTMLElement>) => {
+    if (!window.matchMedia("(min-width: 900px) and (pointer: fine)").matches || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const hero = heroRef.current;
+    if (!hero) return;
+    const bounds = hero.getBoundingClientRect();
+    const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 12;
+    const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 8;
+    if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
+    frameRef.current = requestAnimationFrame(() => {
+      hero.style.setProperty("--hero-device-x", `${x.toFixed(2)}px`);
+      hero.style.setProperty("--hero-device-y", `${y.toFixed(2)}px`);
+    });
+  };
+
+  const resetDeviceDepth = () => {
+    const hero = heroRef.current;
+    if (!hero) return;
+    hero.style.setProperty("--hero-device-x", "0px");
+    hero.style.setProperty("--hero-device-y", "0px");
+  };
+
   return (
-    <section className="hero" id="top" aria-labelledby="hero-title">
+    <section
+      ref={heroRef}
+      className="hero"
+      id="top"
+      aria-labelledby="hero-title"
+      onPointerMove={updateDeviceDepth}
+      onPointerLeave={resetDeviceDepth}
+    >
       <Image
         className="hero-background"
         src="/assets/korix-hero-space-background-1920.webp"
@@ -69,6 +103,7 @@ export function Hero() {
         </svg>
         <span>✦</span>
       </div>
+      <div className="hero-transition" aria-hidden="true" />
     </section>
   );
 }

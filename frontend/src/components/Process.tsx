@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { SectionIntro } from "@/components/SectionIntro";
 
@@ -10,6 +13,29 @@ const steps = [
 ] as const;
 
 export function Process() {
+  const stepsRef = useRef<HTMLOListElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const steps = stepsRef.current;
+    if (!steps || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setIsVisible(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setIsVisible(true);
+        observer.disconnect();
+      },
+      { threshold: 0.25 },
+    );
+
+    observer.observe(steps);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className="section section--border" id="processus" aria-labelledby="process-title">
       <div className="container process-layout">
@@ -19,7 +45,7 @@ export function Process() {
             Décrire votre projet <ArrowRight aria-hidden="true" size={18} />
           </Link>
         </div>
-        <ol className="process-steps">
+        <ol ref={stepsRef} className={`process-steps${isVisible ? " is-visible" : ""}`}>
           {steps.map((step) => (
             <li key={step.number}>
               <div className="process-node">{step.number}</div>
