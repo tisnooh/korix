@@ -2774,8 +2774,8 @@ em {
   }
 
   .hero {
-    height: 1060px;
-    min-height: 1060px;
+    height: 1220px;
+    min-height: 1220px;
     padding: 0;
   }
 
@@ -2834,7 +2834,7 @@ em {
 
   .hero-planet {
     right: -30vw;
-    bottom: 110px;
+    bottom: 162px;
     width: 100vw;
     opacity: 0.58;
     filter: brightness(0.64) saturate(1.05) drop-shadow(0 0 20px rgba(0, 102, 255, 0.14));
@@ -2843,7 +2843,7 @@ em {
 
   .hero-device-stage {
     right: -8vw;
-    bottom: 168px;
+    bottom: 220px;
     width: 118vw;
     animation-duration: 7.4s;
   }
@@ -3271,7 +3271,7 @@ em {
 
 @media (max-width: 400px) {
   .hero-device-stage {
-    bottom: 196px;
+    bottom: 248px;
   }
 }
 
