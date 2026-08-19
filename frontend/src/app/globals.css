@@ -541,30 +541,35 @@ em {
   mask-size: 100% 100%;
 }
 
-.hero-device-energy-map {
-  display: block;
-  width: 100%;
-  height: auto;
-  overflow: visible;
+.hero-device-crack-dimmer,
+.hero-device-crack-flow {
+  position: absolute;
+  inset: 0;
   pointer-events: none;
+  -webkit-mask: url("/assets/korix-rock-cracks-mask.png") center / 100% 100% no-repeat;
+  mask: url("/assets/korix-rock-cracks-mask.png") center / 100% 100% no-repeat;
 }
 
 .hero-device-crack-dimmer {
-  opacity: 0.88;
+  opacity: 0.38;
+  background: #001737;
 }
 
-.hero-device-energy-image {
+.hero-device-crack-flow {
+  overflow: hidden;
   mix-blend-mode: screen;
 }
 
-.hero-crack-sweep-mask {
-  mask-type: luminance;
-}
-
-.hero-crack-sweep {
+.hero-device-crack-flow::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -34%;
+  width: 28%;
+  content: "";
+  opacity: 0;
+  background: linear-gradient(90deg, transparent, rgba(0, 94, 255, 0.24) 24%, #00a8ff 44%, #c9f4ff 51%, #0878ff 60%, rgba(0, 71, 255, 0.2) 78%, transparent);
   animation: hero-rock-energy-sweep 6.4s linear infinite;
-  transform-box: fill-box;
-  transform-origin: center;
   will-change: opacity, transform;
 }
 
@@ -781,14 +786,14 @@ em {
     opacity: 0;
     transform: translateX(0);
   }
-  14% { opacity: 0.82; }
+  14% { opacity: 1; }
   68% {
     opacity: 1;
-    transform: translateX(3000px);
+    transform: translateX(510%);
   }
   76%, 100% {
     opacity: 0;
-    transform: translateX(3200px);
+    transform: translateX(530%);
   }
 }
 
@@ -2860,7 +2865,7 @@ em {
     mask-image: linear-gradient(to bottom, #000 0%, #000 91%, rgba(0, 0, 0, 0.94) 94%, rgba(0, 0, 0, 0.7) 97%, rgba(0, 0, 0, 0.3) 99%, transparent 100%);
   }
 
-  .hero-crack-sweep {
+  .hero-device-crack-flow::before {
     animation-duration: 7.2s;
   }
 
@@ -3325,7 +3330,7 @@ em {
   .hero-planet,
   .hero-device-stage,
   .hero-device-stage::after,
-  .hero-crack-sweep {
+  .hero-device-crack-flow::before {
     animation: none !important;
   }
 
